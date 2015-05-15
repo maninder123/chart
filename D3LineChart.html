@@ -34,11 +34,14 @@
             .GDPLine{stroke:red;}
 
             .avgMobileDataSpeed {
-                fill: steelblue;
+                fill: steelblue !important;
+                stroke:steelblue !important;
+                opacity: 0.1 !important;
             }               
             .avgTimeSpentOnSocialMedia{
-
-                fill: rgba(255, 0, 0, 0.56);
+                fill: red !important;
+                stroke:red !important;
+                opacity: 0.1 !important;
             }   
 
         </style>
@@ -167,7 +170,7 @@
                             .attr("d", valueline(Data));
 
                 }
-                    
+//-------------------------------------------------------------------------------                      
                 d3.csv("Data.csv", function(error, data) {
                     var Population = [],
                             GDP = [],
@@ -297,7 +300,7 @@
                                     return xScale(i + 1);
                                 })
                                 .y0(areaChartHight)
-                                .y(function(d) {
+                                .y1(function(d) {
                                     return Math.round(yScale(d));
                                 });
 
