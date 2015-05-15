@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>D3 Line Chart</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="js/libs/jquery/jquery.js"></script>
+        <script src="js/libs/d3/d3.js"></script>
+        <style>
+
+                body { font: 12px Arial;}
+
+                path { 
+                    stroke: steelblue;
+                    opacity: 1 !important;
+                    stroke-width: 2;
+                    fill: none;
+                }
+
+                .xAxis path,
+                .xAxis line {
+                    fill: none;
+                    stroke: grey;
+                    stroke-width: 1;
+                    shape-rendering: crispEdges;
+                }
+                
+                .grid-line{
+                    stroke: gray;
+                    stroke-width: 1px;
+                    opacity: 0.5;
+                }
+                
+                .GDPLine{stroke:red;}
+                
+                .avgMobileDataSpeed {
+                fill: steelblue;
+}               
+                .avgTimeSpentOnSocialMedia{
+                    
+                    fill: rgba(255, 0, 0, 0.56);
+                }   
+
+        </style>
+        
+    </head>
+    
+    <body>
+        <script>
+            
+    window.addEventListener("resize", ploatTheChart);
+    
+    function ploatTheChart(){
+            
+            d3.select("center").remove();
+            var h = Math.round(window.innerHeight),
+                w = Math.round(window.innerWidth),
+                margin = 20,
+                height = (h * .98) - (2 * margin),
+                width  = (w * .95) - (2 * margin),
+                LineChartHeight = (height * 0.3),
+                areaChartHight = (height * 0.3),
+                groupedBarChartHeight = (height * 0.4);
+        
+                
+        
+        console.log(height);
+        console.log(width);
+        
+            //Creating Main SVG
+                mainSVG = d3.select("body").append("center")
+                                            .append("svg")
+                                             .classed("mainSVG",true)
+                                             .attr("height", height + (margin * 2))
+                                             .attr("width", width + (margin * 2));
+                
+                svgForLineChart = mainSVG.append("g")
+                                          .attr("transform", "translate(" + margin + "," + (height + margin - LineChartHeight) + ")")
+                                          .append("svg")
+                                           .attr("height", LineChartHeight)
+                                           .attr("width", width);
+                                  
+                svgForGroupedBarChart = mainSVG.append("g")
+                                                .attr("transform", "translate(" + margin + "," + (margin) + ")")
+                                                .append("svg")
+                                                 .attr("height", groupedBarChartHeight)
+                                                 .attr("width",width);
+                                  
+                svgForAreaChart = mainSVG.append("g")
+                                                .attr("transform", "translate(" + margin + "," + (height + margin - LineChartHeight - areaChartHight) + ")")
+                                                .append("svg")
+                                                 .attr("height", areaChartHight)
+                                                 .attr("width",width);
+        
+            //X-Scale Common For All Charts
+                xScale = d3.scale.ordinal()
+                           .domain(d3.range(1,31))
+                           .rangeRoundPoints([0,width],0);
+        
+            //Y-Scale For Population
+                yScale_Population = d3.scale.linear()
+                                      .range([LineChartHeight,0]);
+                              
+                yScale_avgTimeSpentOnSocialMedia = d3.scale.linear()
+                                      .range([areaChartHight,0]);
+                              
+                yScale_avgMobileDataSpeed = d3.scale.linear()
+                                      .range([areaChartHight,0]);
+        
+            //Y-Scale For GDP
+                yScale_GDP = d3.scale.linear()
+                               .range([LineChartHeight,0]);
+            
+        
+                xScaleForGroupedBarChart = d3.scale.ordinal()
+                               .domain(d3.range(1,31))
+                               .rangeRoundBands([0, width], .1,0);
+                       
+            //Creating X-Axis           
+                xAxis = d3.svg.axis().scale(xScale).orient("bottom");
+        
+            //Crating Y-Axis For Population Chart
+                yAxis_Population = d3.svg.axis().scale(yScale_Population).orient("right").ticks(3);
+                
+            //Crating Y-Axis For GDP
+                yAxis_GDP = d3.svg.axis().scale(yScale_GDP).orient("left").ticks(3);
+            
+            //Defining Color-scale
+                color = d3.scale.ordinal()
+                                .range(["#0037C5", "#ff0000", "#e0c918"]);
+                        
+                yScaleForGroupedBarChart = d3.scale.linear()
+                                            .domain([0,100])
+                                            .range([groupedBarChartHeight, 0]);
+                                    
+                                    
+                yAxisForGroupedBarChart = d3.svg.axis()
+                                                .scale(yScaleForGroupedBarChart)
+                                                .orient("right")
+                                                .ticks(3);
+                                    
+                yAxisForavgMobileDataSpeed = d3.svg.axis()
+                                                .scale(yScale_avgMobileDataSpeed)
+                                                .orient("right")
+                                                .ticks(3);
+                                        
+                yAxisForavgTimeSpentOnSocialMedia = d3.svg.axis()
+                                                .scale(yScale_avgTimeSpentOnSocialMedia)
+                                                .orient("left")
+                                                .ticks(3);                        
+                
+            //X-Scale for Inner Element in Grouped Bar-Chart
+                xScaleForInnerElement = d3.scale.ordinal();
+                
+            //Function For Crating Line Chart. It Takes Input of yScale & Data      
+            function createLineChart(yScale,Data,className){              
+                var valueline = d3.svg.line()
+                                  .x(function(d,i) { return xScale(i+1); })
+                                  .y(function(d) { return Math.round(yScale(d)); });
+                    
+                    svgForLineChart.append("path")
+                                   .attr("class", className)
+                                   .attr("d", valueline(Data));
+                    
+                      }
+//-------------------------------------------------------------------------------                      
+            d3.csv("Data.csv", function(error, data) {
+                var Population = [],
+                           GDP = [],
+                    avgTimeSpentOnSocialMedia = [],
+                    avgMobileDataSpeed = [];
+                
+                //Geting Data For Population & GDP
+                    data.forEach(function(d){
+                         Population.push(parseInt(d["Population"].split(",").join("")));
+                         GDP.push(parseInt(d["GDP per capita (nominal)"].split(",").join("")));
+                         avgTimeSpentOnSocialMedia.push(parseFloat(d["Avg time spent on social media"]));
+                         avgMobileDataSpeed.push(parseFloat(d["Avg mobile data speed"]));
+                     });
+                     
+                console.log(avgTimeSpentOnSocialMedia);
+                console.log(avgMobileDataSpeed);
+                GDP.pop(); // Temporary Solution For NUL Data
+                
+                //Seting yScale_Population & yScale_GDP
+                    yScale_Population.domain([0, d3.max(Population)]);
+                    yScale_GDP.domain([0, d3.max(GDP)]);
+                
+                //Appening X-Axis To mainSVG
+                d3.select(".mainSVG").append("g")
+                                   .attr("class", "xAxis")
+                                   .attr("transform", "translate(" + margin + "," + (height + margin) + ")")
+                                   .call(xAxis);
+
+                createLineChart(yScale_Population,Population,"populationLine");
+                createLineChart(yScale_GDP,GDP, "GDPLine");
+                
+                svgForLineChart.append("g")
+                                .attr("class", "yAxis")
+                                .call(yAxis_Population);
+                        
+                svgForLineChart.append("g")
+                                .attr("class", "yAxisR")
+                                .attr("transform", "translate(" + (width) + "," + 0 + ")")
+                                .call(yAxis_GDP);
+            
+                d3.selectAll("g.yAxis g.tick").append("line")
+                                                .classed("grid-line", true)
+                                                .attr("x1", 0)
+                                                .attr("y1", 0)
+                                                .attr("x2", width)
+                                                .attr("y2", 0);
+            
+                d3.selectAll("g.yAxisR g.tick").append("line")
+                                                .classed("grid-line", true)
+                                                .attr("x1", 0)
+                                                .attr("y1", 0)
+                                                .attr("x2", width)
+                                                .attr("y2", 0);
+ //-----------------------------------------------------------------------------                                       
+//                 svg.selectAll(".bub").data(GDP).enter().append("circle").attr("class","bub")
+//                         .attr("cx", function(d,i){return xScale(i+1) ;})
+//                         .attr("cy",function(d,i){return y1Scale(d);})
+//                         .attr("r", "5").attr("fill","red");
+
+                //*Geting all the age group names from the data
+                var socialMedia = d3.keys(data[0]).filter(function(key) { return (key == "% use social media")||(key == "% use social media on mobile")||(key == "% bought online on mobile"); });
+                                
+                //*Assigning a new Propertie containing an array of to every elements in the data.
+                data.forEach(function(d) {
+                     d.socialMediaGroup = socialMedia.map(function(name) { return {name: name, value: parseInt(d[name])}; });
+                    
+                });
+                            
+                //Assigning domain and range to inner band of each group
+                xScaleForInnerElement.domain(socialMedia).rangeRoundBands([0, xScaleForGroupedBarChart.rangeBand()]);
+                
+        
+                
+                                
+                                
+                                //Appending y-axis to the svg
+                                svgForGroupedBarChart.append("g")
+                                            .attr("class", "yAxis")
+                                            .call(yAxisForGroupedBarChart);
+//                                    .append("text")
+//                                     .attr("transform", "rotate(-90)")
+//                                     .attr("y", 6)
+//                                     .attr("dy", ".71em")
+//                                     .style("text-anchor", "end")
+//                                     .text("Population");
+                             
+                            //Creating Each state group in the svg and binding data to them
+                            var state = svgForGroupedBarChart.selectAll(".state")
+                                           .data(data)
+                                           .enter()
+                                           .append("g")
+                                            .attr("class", "state")
+                                            .attr("transform", function(d,i) { return "translate(" + xScaleForGroupedBarChart(i+1) + ",0)"; });
+                            
+                            //Creating rectangel for each update elements 
+                                state.selectAll("rect")
+                                     .data(function(d) { return d.socialMediaGroup; })
+                                     .enter()
+                                     .append("rect")
+                                      .attr("width", xScaleForInnerElement.rangeBand())
+                                      .attr("x", function(d) { return xScaleForInnerElement(d.name); })
+                                      .attr("y", function(d) { return yScaleForGroupedBarChart(d.value); })
+                                      .attr("height", function(d) { return (groupedBarChartHeight - yScaleForGroupedBarChart(d.value)); })
+                                      .style("fill", function(d) { return color(d.name); });
+
+//------------------------------------------------------------------------------
+
+            function createAreaChart(yScale,Data,className){              
+                var valueArea = d3.svg.area()
+                                  .x(function(d,i) { return xScale(i+1); })
+                                  .y0(areaChartHight)
+                                  .y(function(d) { return Math.round(yScale(d)); });
+                    
+                    svgForAreaChart.append("path")
+                                   .attr("class", className)
+                                   .attr("d", valueArea(Data));
+                    
+                      }
+            
+            yScale_avgMobileDataSpeed.domain([0, d3.max(avgMobileDataSpeed)]);
+            yScale_avgTimeSpentOnSocialMedia.domain([0, d3.max(avgTimeSpentOnSocialMedia)]);
+            
+            svgForAreaChart.append("g")
+                                .attr("class", "yAxis")
+                                .call(yAxisForavgMobileDataSpeed);
+                        
+                svgForAreaChart.append("g")
+                                .attr("class", "yAxisR")
+                                .attr("transform", "translate(" + (width) + "," + 0 + ")")
+                                .call(yAxisForavgTimeSpentOnSocialMedia);
+            
+            createAreaChart(yScale_avgMobileDataSpeed,avgMobileDataSpeed,"avgMobileDataSpeed");
+                createAreaChart(yScale_avgTimeSpentOnSocialMedia,avgTimeSpentOnSocialMedia, "avgTimeSpentOnSocialMedia");
+
+               });
+                 
+            }
+            ploatTheChart();
+        </script>
+        
+    </body>
+</html>
