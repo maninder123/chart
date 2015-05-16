@@ -6,7 +6,7 @@
 var                 h = Math.round(window.innerHeight), //Geting the height of the browser (Inner Height)
                     w = Math.round(window.innerWidth),  //Geting the width of the browser (Inner Width)
                margin = 25,
-               height = (h * .95) - (2 * margin),       //Seting The total height of our charts
+               height = (h * .90) - (2 * margin),       //Seting The total height of our charts
                width  = (w * .95) - (2 * margin),       //Seting The width of our chart
       lineChartHeight = (height * 0.3),                 //Seting The Height of the Line Chart (Bottom)
       areaChartHeight = (height * 0.3),                 //Seting The Height of the area Chart (Middle)
@@ -18,11 +18,11 @@ groupedBarChartHeight = (height * 0.4);                 //Seting The Height of t
         
 //X-Scale Common For Line Chart and Area Chart
                   xScale = d3.scale.ordinal()
-                                 .rangeRoundPoints([0,width]);
+                                 .rangeRoundPoints([0,width],1.5);
 
 //X-Scale For Grouped Bar Chart        
 xScaleForGroupedBarChart = d3.scale.ordinal()
-                                    .rangeRoundBands([0, width], .1,0);
+                                    .rangeRoundBands([0, width], .1,.5);
                                 
 //X-Scale for Inner Element in Grouped Bar-Chart
 xScaleForInnerElementInGroupedBarChart = d3.scale.ordinal();
