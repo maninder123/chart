@@ -299,27 +299,27 @@ d3.csv("Data.csv", function(error, data) {
 //    .style("font-size","12px")
 //    .call(d3.legend);
 function legend(svg,data){
-var legend = svg.selectAll(".legend")
-                .data(data.slice().reverse())
-                .enter().append("g")
-                .attr("class", "legend")
-                .attr("transform", function(d, i) { return ("translate("+ margin*(3+i) + "," + margin + ")"); });
-                
+  var legend = svg.selectAll(".legend")
+      .data(data.slice())
+    .enter().append("g")
+      .attr("class", "legend")
+      .attr("transform", function(d, i) { return "translate(" + (margin + width*0.2*i) + "," + margin + ")"; });
 
   legend.append("rect")
-      .attr("x",0)
-      .attr("y", 0)
-      .attr("width", 18)
-      .attr("height", 18)
+      .attr("x", function(d, i) {return (margin + width*0.01*i);})
+      .attr("width", 30)
+      .attr("height", 15)
       .style("fill", color);
 
   legend.append("text")
-      .attr("x", function(d,i) { return 20*(i+1);})
-      .attr("y", 0)
-      .style("text-anchor", "end")
+      .attr("x", function(d, i) {return ((margin + width*0.01*i) + 32);})
+      .attr("y", 7)
+      .attr("dy", ".35em")
+      .style("text-anchor", "start")
       .text(function(d) { return d; });
-
 }
     legend(svgForGroupedBarChart,socialMedia);
+    legend(svgForLineChart,["GDP per capita (nominal)","Population"]);
+    legend(svgForAreaChart,["Avg mobile data speed","Avg time spent on social media"]);
 
                });
