@@ -248,7 +248,7 @@ function legend(svg, data) {
             .enter().append("g")
             .attr("class", "legend")
             .attr("transform", function (d, i) {
-                return "translate(" + (margin + width * 0.2 * i) + "," + margin + ")";
+                return "translate(" + (2*margin + width * 0.2 * i) + "," + 2*margin + ")";
             });
 
     legend.append("rect")
@@ -553,34 +553,70 @@ svgForLineChart.selectAll(".bub4").data(data).enter().append("circle").attr("cla
 
         $(".mainSVG").on("click", ".svgForGroupedBarChart .legend:eq(0)",function () {
             $(".country rect:nth-child(1)").toggle(400);
+            
+           if(parseFloat($(".svgForGroupedBarChart .legend:eq(0)").css("opacity")).toFixed(1) == 0.4)
+              $(".svgForGroupedBarChart .legend:eq(0)").css("opacity" ,"1");
+
+          else
+              $(".svgForGroupedBarChart .legend:eq(0)").css("opacity" ,"0.4"); 
         });
 
         $(".mainSVG").on("click", ".svgForGroupedBarChart .legend:eq(1)",function () {
             $(".country rect:nth-child(2)").toggle(400);
+            if(parseFloat($(".svgForGroupedBarChart .legend:eq(1)").css("opacity")).toFixed(1) == 0.4)
+              $(".svgForGroupedBarChart .legend:eq(1)").css("opacity" ,"1"); 
+     
+          else
+              $(".svgForGroupedBarChart .legend:eq(1)").css("opacity" ,"0.4"); 
         });
 
         $(".mainSVG").on("click", ".svgForGroupedBarChart .legend:eq(2)", function () {
             $(".country rect:nth-child(3)").toggle(400);
+            if(parseFloat($(".svgForGroupedBarChart .legend:eq(2)").css("opacity")).toFixed(1) == 0.4)
+              $(".svgForGroupedBarChart .legend:eq(2)").css("opacity" ,"1"); 
+     
+          else
+              $(".svgForGroupedBarChart .legend:eq(2)").css("opacity" ,"0.4"); 
         });
 
         $(".mainSVG").on("click", ".svgForAreaChart .legend:eq(0)",function () {
             $(".avgTimeSpentOnSocialMedia").toggle();
             $(".bub2").toggle();
+            if(parseFloat($(".svgForAreaChart .legend:eq(0)").css("opacity")).toFixed(1) == 0.4)
+              $(".svgForAreaChart .legend:eq(0)").css("opacity" ,"1"); 
+     
+          else
+              $(".svgForAreaChart .legend:eq(0)").css("opacity" ,"0.4"); 
         });
 
         $(".mainSVG").on("click", ".svgForAreaChart .legend:eq(1)" ,function () {
             $(".avgMobileDataSpeed").toggle();
             $(".bub1").toggle();
+            if(parseFloat($(".svgForAreaChart .legend:eq(1)").css("opacity")).toFixed(1) == 0.4)
+              $(".svgForAreaChart .legend:eq(1)").css("opacity" ,"1"); 
+     
+          else
+              $(".svgForAreaChart .legend:eq(1)").css("opacity" ,"0.4"); 
         });
 
         $(".mainSVG").on("click", ".svgForLineChart .legend:eq(0)" ,function () {
             $(".GDPLine").toggle();
             $(".bub4").toggle();
+            if(parseFloat($(".svgForLineChart .legend:eq(0)").css("opacity")).toFixed(1) == 0.4)
+              $(".svgForLineChart .legend:eq(0)").css("opacity" ,"1"); 
+     
+          else
+              $(".svgForLineChart .legend:eq(0)").css("opacity" ,"0.4"); 
         });
 
         $(".mainSVG").on("click", ".svgForLineChart .legend:eq(1)",function () {
             $(".Population").toggle();
             $(".bub3").toggle();
+            if(parseFloat($(".svgForLineChart .legend:eq(1)").css("opacity")).toFixed(1) == 0.4)
+              $(".svgForLineChart .legend:eq(1)").css("opacity" ,"1"); 
+     
+          else
+              $(".svgForLineChart .legend:eq(1)").css("opacity" ,"0.4");
         });
         
     });

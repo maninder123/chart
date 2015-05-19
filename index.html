@@ -18,7 +18,7 @@
             
          <select>
              
-            <option value="">Sort By</option>
+            <option value="Population">Sort By</option>
             <option value="Population">Population</option>
             <option value="GDP per capita (nominal)">GDP per Capita (nominal)</option>
             <option value="% use social media">% Use Social Media</option>
@@ -51,16 +51,24 @@
         <div id ="fb_integration">
             <div id="fb-root"></div>
             <script>
-                (function(d, s, id) {
-                        var js, fjs = d.getElementsByTagName(s)[0];
-                        if (d.getElementById(id)) return;
-                        js = d.createElement(s); js.id = id;
-                        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3&appId=1603811166568046";
-                        fjs.parentNode.insertBefore(js, fjs);
-                    }
-                (document, 'script', 'facebook-jssdk'));</script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1603811166568046',
+      xfbml      : true,
+      version    : 'v2.3'
+    });
+  };
 
-        <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button_count"></div>
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+
+        <div class="fb-share-button" data-href="http://ahextechnologies.com/test-d3/index.html" data-layout="button_count"></div>
 </div>
 </body>
 </html>
