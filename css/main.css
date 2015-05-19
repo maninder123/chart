@@ -1,0 +1,75 @@
+
+                body { font: 12px Arial;}
+
+                path { 
+                    stroke: steelblue;
+                    opacity: 1 !important;
+                    stroke-width: 2;
+                    fill: none;
+                }
+
+                .xAxis path,
+                .xAxis line {
+                    fill: none;
+                    stroke: grey;
+                    stroke-width: 1;
+                    shape-rendering: crispEdges;
+                }
+                
+                .grid-line{
+                    stroke: gray;
+                    stroke-width: 1px;
+                    opacity: 0.5;
+                }
+                
+                .GDPLine{stroke:#FF5722;}
+                .Population{stroke:#003300;}
+                
+                .avgMobileDataSpeed {
+                fill: #E07628;
+                }
+                
+                .avgTimeSpentOnSocialMedia{
+                    
+                    fill: rgba(254, 181, 6, 0.34);
+                }
+                
+                #twitter_integration{
+                    position: absolute;
+                    bottom: 1%;
+                    right: 5%;
+                    
+                }
+                
+                #fb_integration{
+                    position: absolute;
+                    bottom: 2%;
+                    right: 14%;
+                    
+                }
+             
+                .select-box {
+                    padding: 0;
+                    margin: 0;
+                    border: 1px solid #ccc;
+                    width: 225px;
+                    border-radius: 3px;
+                    overflow: hidden;
+                    background-color: #fff;
+                    text-align: center;
+                    //background: #fff url("http://www.scottgood.com/jsg/blog.nsf/images/arrowdown.gif") no-repeat 90% 50%;
+                }
+
+                .select-box select {
+                    text-align: center;
+                    padding: 5px 8px;
+                    width: 100%;
+                    border: none;
+                    box-shadow: none;
+                    background-color: transparent;
+
+                }
+
+                .select-box select:focus {
+                    outline: none;
+                }
