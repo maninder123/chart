@@ -619,5 +619,12 @@ svgForLineChart.selectAll(".bub4").data(data).enter().append("circle").attr("cla
               $(".svgForLineChart .legend:eq(1)").css("opacity" ,"0.4");
         });
         
+        $('#embed').hide();
+        $("#share").click(function(){
+        $("#embed").toggle();
+        var url=window.location.href;
+        var string='<iframe src='+url+' height='+h +' width='+ w+'></iframe>';
+        $('#embed').val(string);
+        });
     });
 });

@@ -36,7 +36,7 @@
                 
                 #twitter_integration{
                     position: absolute;
-                    bottom: 0;
+                    bottom: 1%;
                     right: 5%;
                     padding: 10px;             
                 }
@@ -44,10 +44,18 @@
                 #fb_integration
                 {
                    position: absolute;
-                    bottom: 1%;
-                    right: 14%;
+                    bottom: 1.5%;
+                    right: 12%;
                     padding: 10px; 
+                  
+}
+                
+                #embedChart{
                     
+                    position: absolute;
+                    bottom: 1.4%;
+                    right: 19.5%;
+                    padding: 10px; 
                     
                 }
                 .select-box {

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>D3 Line Chart</title>
+        <title>Ahex - Chart</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="js/libs/jquery/jquery.js"></script>
@@ -29,21 +29,16 @@
             </select> 
         </div>
         
+        <div id="embedChart">
+        <button type="button" id="share"><b>Embed</b></button>
+        <input type="text" id="embed">
+        </div>
         
         <!--Twitter Integration-->
       
         <div id = "twitter_integration">
-        <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://localhost/D3/html1.html"  data-size="large">Tweet</a>
-        <script>!function (d, s, id) {
-                    var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
-                            if (!d.getElementById(id)) {
-                                        js = d.createElement(s);
-                                     js.id = id;
-                                    js.src = p + '://platform.twitter.com/widgets.js';
-                                    fjs.parentNode.insertBefore(js, fjs);
-                                 }
-                            }
-                (document, 'script', 'twitter-wjs');</script>
+        <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://http://ahextechnologies.com/test-d3/index.html">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
             </div>
      
         <!--Facebook Integration-->
@@ -69,6 +64,7 @@
 </script>
 
         <div class="fb-share-button" data-href="http://ahextechnologies.com/test-d3/index.html" data-layout="button_count"></div>
+        
 </div>
 </body>
 </html>
