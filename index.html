@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="js/libs/jquery/jquery.js"></script>
         <script src="js/libs/d3/d3.js"></script>
+        <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
         <script src="js/main.js"></script>
         <style>
 
@@ -33,13 +34,14 @@
                 }
                 
                 .GDPLine{stroke:red;}
+                .Population{stroke:#669900;}
                 
                 .avgMobileDataSpeed {
-                fill: steelblue;
+                fill: #E07628;
 }               
                 .avgTimeSpentOnSocialMedia{
                     
-                    fill: rgba(255, 0, 0, 0.56);
+                    fill: rgba(254, 181, 6, 0.34);
                 }
                 
                 #twitter_integration{
@@ -55,12 +57,56 @@
                     right: 14%;
                     
                 }
+             
+                .select-box {
+    padding: 0;
+    margin: 0;
+    border: 1px solid #ccc;
+    width: 150px;
+    border-radius: 3px;
+    overflow: hidden;
+    background-color: #fff;
+    text-align: center;
+
+    background: #fff url("http://www.scottgood.com/jsg/blog.nsf/images/arrowdown.gif") no-repeat 90% 50%;
+}
+
+.select-box select {
+    text-align: center;
+    padding: 5px 8px;
+    width: 130%;
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
+    
+}
+
+.select-box select:focus {
+    outline: none;
+}
 
         </style>
         
     </head>
     
     <body>
+       
+        <div class = "select-box">
+            
+         <select>
+             
+            <option value="">Order By</option>
+            <option value="Population">Population</option>
+            <option value="GDP per capita (nominal)">GDP per capita (nominal)</option>
+            <option value="% use social media">% use social media</option>
+            <option value="% use social media on mobile">% use social media on mobile</option>
+            <option value="% bought online on mobile">% bought online on mobile</option>
+            <option value="Avg mobile data speed">Avg mobile data speed</option>
+            <option value="Avg time spent on social media">Avg time spent on social media</option>
+            </select> 
+        </div>
+        
+        
         <!--Twitter Integration-->
       
         <div id = "twitter_integration">

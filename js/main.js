@@ -11,14 +11,9 @@ var                 h = Math.round(window.innerHeight), //Geting the height of t
       lineChartHeight = (height * 0.3),                 //Seting The Height of the Line Chart (Bottom)
       areaChartHeight = (height * 0.3),                 //Seting The Height of the area Chart (Middle)
 groupedBarChartHeight = (height * 0.3);                 //Seting The Height of the grouped bar chart (Top)
-      
-        console.log(height);
-        console.log(lineChartHeight);
-        console.log(areaChartHeight);
-        console.log(groupedBarChartHeight);
-        
+
 //X-Scale Common For Line Chart and Area Chart
-                  xScale = d3.scale.ordinal()
+            var      xScale = d3.scale.ordinal()
                                  .rangeRoundPoints([0,width],1.75);
 
 //X-Scale For Grouped Bar Chart        
@@ -51,7 +46,7 @@ xScaleForInnerElementInGroupedBarChart = d3.scale.ordinal();
                                
 //Defining Color-scale For Bar Chart
                 color = d3.scale.ordinal()
-                                .range(["#0037C5", "#ff0000", "#e0c918"]);
+                                .range(["#990033", "#669900", "	#0099FF"]);
 
 //Creating X-Axis Common for both area chart and line chart           
                 xAxis = d3.svg.axis().scale(xScale).orient("bottom");
@@ -104,6 +99,7 @@ function creatingLineChartSvg() {
                 svgForLineChart = mainSVG.append("g")
                                           .attr("transform", "translate(" + margin + "," + (height + margin - lineChartHeight) + ")")
                                           .append("svg")
+                                          .attr("class","svgForLineChart")
                                            .attr("height", lineChartHeight)
                                            .attr("width", width);
                 
@@ -123,6 +119,7 @@ function creatingAreaChartSvg() {
                 svgForAreaChart = mainSVG.append("g")
                                           .attr("transform", "translate(" + margin + "," + (height + margin - lineChartHeight - areaChartHeight) + ")")
                                           .append("svg")
+                                           .attr("class","svgForAreaChart")
                                            .attr("height", areaChartHeight)
                                            .attr("width",width);
     
@@ -143,6 +140,7 @@ function creatingGroupedBarChartSvg() {
           svgForGroupedBarChart = mainSVG.append("g")
                                           .attr("transform", "translate(" + margin + "," + (height + margin - lineChartHeight - areaChartHeight - groupedBarChartHeight) + ")")
                                           .append("svg")
+                                           .attr("class","svgForGroupedBarChart")
                                            .attr("height", groupedBarChartHeight)
                                            .attr("width",width);
     
@@ -209,6 +207,27 @@ function creatingGroupedBarChart(data) {
    
 }
 
+function legend(svg,data){
+  var legend = svg.selectAll(".legend")
+      .data(data.slice())
+    .enter().append("g")
+      .attr("class", "legend")
+      .attr("transform", function(d, i) { return "translate(" + (margin + width*0.2*i) + "," + margin + ")"; });
+
+  legend.append("rect")
+      .attr("x", function(d, i) {return (margin + width*0.01*i);})
+      .attr("width", 30)
+      .attr("height", 15)
+      .style("fill", color);
+
+  legend.append("text")
+      .attr("x", function(d, i) {return ((margin + width*0.01*i) + 32);})
+      .attr("y", 7)
+      .attr("dy", ".35em")
+      .style("text-anchor", "start")
+      .text(function(d) { return d; });
+}
+
 //Now geting data from CSV File And Extract all the data in an array (its an array of objects) and modify as our requirement. 
 d3.csv("Data.csv", function(error, data) {
     
@@ -232,13 +251,13 @@ d3.csv("Data.csv", function(error, data) {
         xScale.domain(countryCode);
         xScaleForGroupedBarChart.domain(countryCode);
         
+        //Assigning domain and range to inner band of each group
+        xScaleForInnerElementInGroupedBarChart.domain(socialMedia).rangeRoundBands([0, xScaleForGroupedBarChart.rangeBand()]);
+        
         //Assigning domain for yScaleForPopulation & yScaleForGDP
         yScaleForPopulation.domain([0, 2 * maxPopulation]);
         yScaleForGDP.domain([0, 2 * maxGDP]);
-            
-        //Assigning domain and range to inner band of each group
-        xScaleForInnerElementInGroupedBarChart.domain(socialMedia).rangeRoundBands([0, xScaleForGroupedBarChart.rangeBand()]);
-            
+        
         //Assigning domain for yScaleForAvgMobileDataSpeed & yScaleForAvgTimeSpentOnSocialMedia
         yScaleForAvgMobileDataSpeed.domain([0, 2 * maxAvgMobileDataSpeed]);
         yScaleForAvgTimeSpentOnSocialMedia.domain([0, 2 * maxAvgTimeSpentOnSocialMedia]);
@@ -260,25 +279,32 @@ d3.csv("Data.csv", function(error, data) {
                                .attr("transform", "translate(" + margin + "," + (height + margin- lineChartHeight - (areaChartHeight - yScaleForAvgTimeSpentOnSocialMedia(0))) + ")")
                                .call(xAxis);
         
-        //Appening X-Axis To mainSVG
+        //Appening X-Axis For Grouped Bar Chart
         d3.select(".mainSVG").append("g")
                               .attr("class", "xAxis")
                               .attr("transform", "translate(" + margin + "," + (height + margin- lineChartHeight - areaChartHeight - (groupedBarChartHeight - yScaleForGroupedBarChart(0))) + ")")
                               .call(xAxisForGroupedBarChart);
-                         
+        
+        creatingGroupedBarChart(data);
+           
         creatingLineChart(yScaleForPopulation,data,"Population","Population");
         creatingLineChart(yScaleForGDP,data, "GDP per capita (nominal)","GDPLine");
 
         creatingAreaChart(yScaleForAvgMobileDataSpeed,data,"Avg mobile data speed","avgMobileDataSpeed");
         creatingAreaChart(yScaleForAvgTimeSpentOnSocialMedia,data, "Avg time spent on social media","avgTimeSpentOnSocialMedia");
             
-        creatingGroupedBarChart(data);
+        
         
         //Adding Bubbles To Area Chart
-        svgForAreaChart.selectAll(".bub").data(data).enter().append("circle").attr("class","bub")
+        svgForAreaChart.selectAll(".bub1").data(data).enter().append("circle").attr("class","bub")
                         .attr("cx", function(d){return xScale(d["ISO Country Code"]) ;})
                         .attr("cy",function(d){return yScaleForAvgMobileDataSpeed(d["Avg mobile data speed"]);})
                         .attr("r", "5").attr("fill","red");
+                
+        svgForAreaChart.selectAll(".bub2").data(data).enter().append("circle").attr("class","bub")
+                        .attr("cx", function(d){return xScale(d["ISO Country Code"]) ;})
+                        .attr("cy",function(d){return yScaleForAvgTimeSpentOnSocialMedia(d["Avg time spent on social media"]);})
+                        .attr("r", "5").attr("fill","gray");
             
             d3.selectAll("g.yAxisL g.tick").append("line")
                                             .classed("grid-line", true)
@@ -293,33 +319,48 @@ d3.csv("Data.csv", function(error, data) {
                                             .attr("y1", 0)
                                             .attr("x2", width)
                                             .attr("y2", 0);
-//    legend = svgForLineChart.append("g")
-//    .attr("class","legend")
-//    .attr("transform","translate(50,30)")
-//    .style("font-size","12px")
-//    .call(d3.legend);
-function legend(svg,data){
-  var legend = svg.selectAll(".legend")
-      .data(data.slice())
-    .enter().append("g")
-      .attr("class", "legend")
-      .attr("transform", function(d, i) { return "translate(" + (margin + width*0.2*i) + "," + margin + ")"; });
 
-  legend.append("rect")
-      .attr("x", function(d, i) {return (margin + width*0.01*i);})
-      .attr("width", 30)
-      .attr("height", 15)
-      .style("fill", color);
 
-  legend.append("text")
-      .attr("x", function(d, i) {return ((margin + width*0.01*i) + 32);})
-      .attr("y", 7)
-      .attr("dy", ".35em")
-      .style("text-anchor", "start")
-      .text(function(d) { return d; });
-}
     legend(svgForGroupedBarChart,socialMedia);
+    color.range(["#E07628", "rgba(254, 181, 6, 0.34)"]);
+    legend(svgForAreaChart,["Avg time spent on social media","Avg mobile data speed"]);
+    color.range([ "#669900", "red"]);
     legend(svgForLineChart,["GDP per capita (nominal)","Population"]);
-    legend(svgForAreaChart,["Avg mobile data speed","Avg time spent on social media"]);
+    
 
-               });
+$(document).ready(function(){
+    $(".select-box select").change(function(){
+        sortDataAndReplotTheChart(data, $(this).val());
+    });
+    
+    $(".svgForGroupedBarChart .legend:eq(0)").on("click",function(){
+        $(".country rect:nth-child(1)").toggle();
+    });
+    
+    $(".svgForGroupedBarChart .legend:eq(1)").on("click",function(){
+        $(".country rect:nth-child(2)").toggle();
+    });
+    
+    $(".svgForGroupedBarChart .legend:eq(2)").on("click",function(){
+        $(".country rect:nth-child(3)").toggle();
+    });
+    
+    $(".svgForAreaChart .legend:eq(0)").on("click",function(){
+        $(".avgTimeSpentOnSocialMedia").toggle(); 
+    });
+    
+    $(".svgForAreaChart .legend:eq(1)").on("click",function(){
+        $(".avgMobileDataSpeed").toggle();
+    });
+    
+    $(".svgForLineChart .legend:eq(0)").on("click",function(){
+        $(".GDPLine").toggle();
+    });
+    
+    $(".svgForLineChart .legend:eq(1)").on("click",function(){
+        $(".Population").toggle();
+    });
+    
+    
+});
+ });
