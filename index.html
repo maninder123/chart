@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Ahex - Chart</title>
+        <title>memestreme - The State of Mobile Social Media</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="js/libs/jquery/jquery.js"></script>
@@ -9,62 +9,88 @@
         <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
         <script src="js/main.js"></script>
         <link rel="stylesheet" type="text/css" href="css/main.css">
-        
+
     </head>
-    
+
     <body>
-       
+    <center>
+        <div id="title"><p>
+                <b>The State of Mobile Social Media</b>
+            </p>
+
+        </div>
+    </center>
         <div class = "select-box">
-            
-         <select>
-             
-            <option value="Population">Sort By</option>
-            <option value="Population">Population</option>
-            <option value="GDP per capita (nominal)">GDP per Capita (nominal)</option>
-            <option value="% use social media">% Use Social Media</option>
-            <option value="% use social media on mobile">% Use Social Media on Mobile</option>
-            <option value="% bought online on mobile">% Bought Online on Mobile</option>
-            <option value="Avg mobile data speed">Avg Mobile Data Speed</option>
-            <option value="Avg time spent on social media">Avg Time Spent on Social Media</option>
+
+            <select>
+
+                <option value="Population">Sort By</option>
+                <option value="Population">Population</option>
+                <option value="GDP per capita (nominal)">GDP per Capita (nominal)</option>
+                <option value="% use social media">% Use Social Media</option>
+                <option value="% use social media on mobile">% Use Social Media on Mobile</option>
+                <option value="% bought online on mobile">% Bought Online on Mobile</option>
+                <option value="Avg mobile data speed">Avg Mobile Data Speed</option>
+                <option value="Avg time spent on social media">Avg Time Spent on Social Media</option>
             </select> 
         </div>
-        
+
         <div id="embedChart">
-        <button type="button" id="share"><b>Embed</b></button>
-        <input type="text" id="embed">
+            <button type="button" id="share"><b>Embed</b></button>
+            <input type="text" id="embed">
         </div>
-        
+
         <!--Twitter Integration-->
-      
+
         <div id = "twitter_integration">
-        <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://http://ahextechnologies.com/test-d3/index.html">Tweet</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-            </div>
-     
+            <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://http://ahextechnologies.com/test-d3/index.html">Tweet</a>
+            <script>!function (d, s, id) {
+                    var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
+                    if (!d.getElementById(id)) {
+                        js = d.createElement(s);
+                        js.id = id;
+                        js.src = p + '://platform.twitter.com/widgets.js';
+                        fjs.parentNode.insertBefore(js, fjs);
+                    }
+                }(document, 'script', 'twitter-wjs');</script>
+        </div>
+
         <!--Facebook Integration-->
-        
+
         <div id ="fb_integration">
             <div id="fb-root"></div>
             <script>
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '1603811166568046',
-      xfbml      : true,
-      version    : 'v2.3'
-    });
-  };
+                window.fbAsyncInit = function () {
+                    FB.init({
+                        appId: '1603811166568046',
+                        xfbml: true,
+                        version: 'v2.3'
+                    });
+                };
 
-  (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "//connect.facebook.net/en_US/sdk.js";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
-</script>
+                (function (d, s, id) {
+                    var js, fjs = d.getElementsByTagName(s)[0];
+                    if (d.getElementById(id)) {
+                        return;
+                    }
+                    js = d.createElement(s);
+                    js.id = id;
+                    js.src = "//connect.facebook.net/en_US/sdk.js";
+                    fjs.parentNode.insertBefore(js, fjs);
+                }(document, 'script', 'facebook-jssdk'));
+            </script>
 
-        <div class="fb-share-button" data-href="http://ahextechnologies.com/test-d3/index.html" data-layout="button_count"></div>
-        
-</div>
-</body>
+            <div class="fb-share-button" data-href="http://ahextechnologies.com/test-d3/index.html" data-layout="button_count"></div>
+
+        </div>
+
+        <div class = "footer">
+            <p>
+                Data Sources:<br>
+                Wikipedia, Statista, Worldometer, </br>
+                Trading Economics, We Are Social, NetRader.
+            </p>
+
+        </div>
+    </body>
 </html>

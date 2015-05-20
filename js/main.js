@@ -5,20 +5,20 @@
 
 var h = Math.round(window.innerHeight), //Geting the height of the browser (Inner Height)
         w = Math.round(window.innerWidth), //Geting the width of the browser (Inner Width)
-        margin = 25,
-        height = (h * .90) - (2 * margin), //Seting The total height of our charts
-        width = (w * .98) - (2 * margin), //Seting The width of our chart
-        lineChartHeight = (height * 0.33), //Seting The Height of the Line Chart (Bottom)
-        areaChartHeight = (height * 0.33), //Seting The Height of the area Chart (Middle)
-        groupedBarChartHeight = (height * 0.33);                 //Seting The Height of the grouped bar chart (Top)
+        margin = (w <= 480) ? 40 : 50,
+        height = (h * .95), //Seting The total height of our charts
+        width = (w * .90), //Seting The width of our chart
+        lineChartHeight = (height * 0.3), //Seting The Height of the Line Chart (Bottom)
+        areaChartHeight = (height * 0.3), //Seting The Height of the area Chart (Middle)
+        groupedBarChartHeight = (height * 0.3);                 //Seting The Height of the grouped bar chart (Top)
 
 //X-Scale Common For Line Chart and Area Chart
-var xScale = d3.scale.ordinal()
-        .rangeRoundPoints([0, width], 1.75);
+xScale = d3.scale.ordinal()
+        .rangeRoundPoints([0, (width - (2 * margin))], 1);
 
 //X-Scale For Grouped Bar Chart        
 xScaleForGroupedBarChart = d3.scale.ordinal()
-        .rangeRoundBands([0, width], .1, .5);
+        .rangeRoundBands([0, (width - (2 * margin))], .1, .1);
 
 //X-Scale for Inner Element in Grouped Bar-Chart
 xScaleForInnerElementInGroupedBarChart = d3.scale.ordinal();
@@ -41,12 +41,12 @@ yScaleForAvgMobileDataSpeed = d3.scale.linear()
 
 //Y-Scale For Grouped Bar Chart
 yScaleForGroupedBarChart = d3.scale.linear()
-        .domain([0, 125])
+        .domain([0, 110])
         .range([groupedBarChartHeight, 0]);
 
 //Defining Color-scale For Bar Chart
 color = d3.scale.ordinal()
-        .range(["#990033", "#669900", "	#0099FF"]);
+        .range(["#00A5FE", "#8CC63E", "#F2CC5D"]);
 
 //Creating X-Axis Common for both area chart and line chart           
 xAxis = d3.svg.axis().scale(xScale).orient("bottom");
@@ -56,47 +56,46 @@ xAxisForGroupedBarChart = d3.svg.axis().scale(xScaleForGroupedBarChart).orient("
 
 
 //Crating Y-Axis For Population Chart
-yAxisForPopulation = d3.svg.axis().scale(yScaleForPopulation).orient("right").ticks(4).tickValues([557513534,1115027068,1672540603,2230054137]).tickFormat(function (d) {
-    return (d/1000000000).toFixed(1) + "B";
+yAxisForPopulation = d3.svg.axis().scale(yScaleForPopulation).orient("left").ticks(3).tickValues([557513534, 1115027068, 1672540603]).tickFormat(function (d) {
+    return (d / 1000000000).toFixed(1) + "B";
 });
 
 //Crating Y-Axis For GDP
-yAxisForGDP = d3.svg.axis().scale(yScaleForGDP).orient("left").ticks(4, "s").tickValues([25128,50257,75386,100515]);
+yAxisForGDP = d3.svg.axis().scale(yScaleForGDP).orient("right").ticks(3, "s").tickValues([25128, 50257, 75386]);
 
 //Creating Y-Axis For Grouped Bar Chart
 yAxisForGroupedBarChartL = d3.svg.axis()
         .scale(yScaleForGroupedBarChart)
         .orient("left")
-        .ticks(4).tickFormat(function (d) {
+        .ticks(3).tickFormat(function (d) {
     return d + "%";
-}).tickValues([25,50,75,100]);
-;
+}).tickValues([30, 60, 90]);
+
 //Creating Y-Axis For Grouped Bar Chart
 yAxisForGroupedBarChartR = d3.svg.axis()
         .scale(yScaleForGroupedBarChart)
         .orient("right")
         .ticks(4).tickFormat(function (d) {
     return d + "%";
-}).tickValues([25,50,75,100]);
-;
+}).tickValues([30, 60, 90]);
 
 //Creating Y-Axis For Avg Mobile Data Speed
 yAxisForAvgMobileDataSpeed = d3.svg.axis()
         .scale(yScaleForAvgMobileDataSpeed)
-        .orient("right")
-        .ticks(4).tickValues([9,18,27,36])
+        .orient("left")
+        .ticks(3).tickValues([8, 16, 24])
         .tickFormat(function (d) {
-    return d + "Mbps";
-});
+            return d + "Mbps";
+        });
 
 //Creating Y-Axis For Avg Time Spent On SocialMedia
 yAxisForAvgTimeSpentOnSocialMedia = d3.svg.axis()
         .scale(yScaleForAvgTimeSpentOnSocialMedia)
-        .orient("left")
-        .ticks(4).tickValues([2,4,6,8])
+        .orient("right")
+        .ticks(3).tickValues([2, 4, 6])
         .tickFormat(function (d) {
-    return d + "h";
-});
+            return d + "h";
+        });
 
 
 //Function for creating Main SVG Container
@@ -104,14 +103,14 @@ function creatingMainSvg() {
     mainSVG = d3.select("body").append("center")
             .append("svg")
             .classed("mainSVG", true)
-            .attr("height", height + (margin * 2)) //Here we are adding two times margin
-            .attr("width", width + (margin * 2));  // for both height and width for better spacing.
+            .attr("height", height) //Here we are adding two times margin
+            .attr("width", width);  // for both height and width for better spacing.
 }
 
 //Function for Appending SVG for Line Chart Along with its axes
 function creatingLineChartSvg() {
     svgForLineChart = mainSVG.append("g")
-            .attr("transform", "translate(" + margin + "," + (height + margin - lineChartHeight) + ")")
+            .attr("transform", "translate( 0 , " + (height - (lineChartHeight + margin)) + ")")
             .append("svg")
             .attr("class", "svgForLineChart")
             .attr("height", lineChartHeight)
@@ -119,11 +118,12 @@ function creatingLineChartSvg() {
 
     svgForLineChart.append("g")
             .attr("class", "yAxisL")
+            .attr("transform", "translate(" + margin + "," + 0 + ")")
             .call(yAxisForPopulation);
 
     svgForLineChart.append("g")
             .attr("class", "yAxisR")
-            .attr("transform", "translate(" + (width) + "," + 0 + ")")
+            .attr("transform", "translate(" + (width - margin) + "," + 0 + ")")
             .call(yAxisForGDP);
 
 }
@@ -131,7 +131,7 @@ function creatingLineChartSvg() {
 //Function for Appending SVG for Area Chart Along with its axes
 function creatingAreaChartSvg() {
     svgForAreaChart = mainSVG.append("g")
-            .attr("transform", "translate(" + margin + "," + (height + margin - lineChartHeight - areaChartHeight) + ")")
+            .attr("transform", "translate( 0 , " + (height - (lineChartHeight + areaChartHeight + margin)) + ")")
             .append("svg")
             .attr("class", "svgForAreaChart")
             .attr("height", areaChartHeight)
@@ -139,11 +139,12 @@ function creatingAreaChartSvg() {
 
     svgForAreaChart.append("g")
             .attr("class", "yAxisL")
+            .attr("transform", "translate(" + margin + "," + 0 + ")")
             .call(yAxisForAvgMobileDataSpeed);
 
     svgForAreaChart.append("g")
-            .attr("class", "yAxisL")
-            .attr("transform", "translate(" + (width) + "," + 0 + ")")
+            .attr("class", "yAxisR")
+            .attr("transform", "translate(" + (width - margin) + "," + 0 + ")")
             .call(yAxisForAvgTimeSpentOnSocialMedia);
 
 }
@@ -152,7 +153,7 @@ function creatingAreaChartSvg() {
 //Function for Appending SVG for Grouped Bar Chart Along with its axes
 function creatingGroupedBarChartSvg() {
     svgForGroupedBarChart = mainSVG.append("g")
-            .attr("transform", "translate(" + margin + "," + (height + margin - lineChartHeight - areaChartHeight - groupedBarChartHeight) + ")")
+            .attr("transform", "translate( 0 , " + (height - (margin + lineChartHeight + areaChartHeight + groupedBarChartHeight)) + ")")
             .append("svg")
             .attr("class", "svgForGroupedBarChart")
             .attr("height", groupedBarChartHeight)
@@ -160,11 +161,13 @@ function creatingGroupedBarChartSvg() {
 
     svgForGroupedBarChart.append("g")
             .attr("class", "yAxisL")
-            .call(yAxisForGroupedBarChartR);
+            .attr("transform", "translate(" + margin + "," + 0 + ")")
+            .call(yAxisForGroupedBarChartL);
 
     svgForGroupedBarChart.append("g")
-            .attr("transform", "translate(" + (width) + "," + 0 + ")")
-            .call(yAxisForGroupedBarChartL);
+            .attr("class", "yAxisR")
+            .attr("transform", "translate(" + (width - margin) + "," + 0 + ")")
+            .call(yAxisForGroupedBarChartR);
 
 }
 
@@ -173,7 +176,7 @@ function creatingLineChart(yScale, Data, lineName, className) {
 
     var valueline = d3.svg.line()
             .x(function (d) {
-                return xScale(d["ISO Country Code"]);
+                return (margin + xScale(d["ISO Country Code"]));
             })
             .y(function (d) {
                 return Math.round(yScale(d[lineName]));
@@ -190,7 +193,7 @@ function creatingLineChart(yScale, Data, lineName, className) {
 function creatingAreaChart(yScale, Data, areaName, className) {
     var valueArea = d3.svg.area()
             .x(function (d) {
-                return xScale(d["ISO Country Code"]);
+                return (margin + xScale(d["ISO Country Code"]));
             })
             .y0(areaChartHeight)
             .y1(function (d) {
@@ -213,9 +216,9 @@ function creatingGroupedBarChart(data) {
             .append("g")
             .attr("class", "country")
             .attr("transform", function (d, i) {
-                return "translate(" + xScaleForGroupedBarChart(d["ISO Country Code"]) + ",0)";
+                return "translate(" + (margin + xScaleForGroupedBarChart(d["ISO Country Code"])) + ",0)";
             });
-    
+
     //Creating bars for each update elements 
     country.selectAll("rect")
             .data(function (d) {
@@ -248,20 +251,20 @@ function legend(svg, data) {
             .enter().append("g")
             .attr("class", "legend")
             .attr("transform", function (d, i) {
-                return "translate(" + (2*margin + width * 0.2 * i) + "," + 2*margin + ")";
+                return "translate(" + (2 * margin + width * 0.2 * i) + "," + margin + ")";
             });
 
     legend.append("rect")
             .attr("x", function (d, i) {
                 return (margin + width * 0.01 * i);
             })
-            .attr("width", 30)
-            .attr("height", 15)
+            .attr("width", ((w <= 480) ? 30 : 40))
+            .attr("height", ((w <= 480) ? 5 : 15))
             .style("fill", color);
 
     legend.append("text")
             .attr("x", function (d, i) {
-                return ((margin + width * 0.01 * i) + 32);
+                return ((margin + width * 0.01 * i) + 45);
             })
             .attr("y", 7)
             .attr("dy", ".35em")
@@ -271,45 +274,47 @@ function legend(svg, data) {
             });
 }
 
-function sortDataAndReplotTheChart(data,sortValue){
-        countryCode = [];
-        data.sort(function(a,b){ return (a[sortValue] - b[sortValue]);});
-        console.log(data);
-        data.forEach(function (d){
-            countryCode.push(d["ISO Country Code"]);    
-        });
+function sortDataAndReplotTheChart(data, sortValue) {
+    countryCode = [];
+    data.sort(function (a, b) {
+        return (a[sortValue] - b[sortValue]);
+    });
+
+    data.forEach(function (d) {
+        countryCode.push(d["ISO Country Code"]);
+    });
     xScale.domain(countryCode);
     xScaleForGroupedBarChart.domain(countryCode);
-    color.range(["#990033", "#669900", "#0099FF"]);
-    
+    color.range(["#00A5FE", "#8CC63E", "#F2CC5D"]);
+
     $(".xAxis").remove();
     $(".svgForLineChart").remove();
     $(".svgForAreaChart").remove();
     $(".svgForGroupedBarChart").remove();
-    
+
     creatingLineChartSvg();
     creatingAreaChartSvg();
     creatingGroupedBarChartSvg();
-    
+
     //Appening X-Axis for Line Chart To mainSVG
     d3.select(".mainSVG").append("g")
             .attr("class", "xAxis")
-            .attr("transform", "translate(" + margin + "," + (height + margin - (lineChartHeight - yScaleForGDP(0))) + ")")
+            .attr("transform", "translate(" + margin + "," + (height - margin - (lineChartHeight - yScaleForGDP(0))) + ")")
             .call(xAxis);
 
     //Appening X-Axis for Area Chart To mainSVG
     d3.select(".mainSVG").append("g")
             .attr("class", "xAxis")
-            .attr("transform", "translate(" + margin + "," + (height + margin - lineChartHeight - (areaChartHeight - yScaleForAvgTimeSpentOnSocialMedia(0))) + ")")
+            .attr("transform", "translate(" + margin + "," + (height - margin - lineChartHeight - (areaChartHeight - yScaleForAvgTimeSpentOnSocialMedia(0))) + ")")
             .call(xAxis);
 
     //Appening X-Axis For Grouped Bar Chart
     d3.select(".mainSVG").append("g")
             .attr("class", "xAxis")
-            .attr("transform", "translate(" + margin + "," + (height + margin - lineChartHeight - areaChartHeight - (groupedBarChartHeight - yScaleForGroupedBarChart(0))) + ")")
+            .attr("transform", "translate(" + margin + "," + (height - margin - lineChartHeight - areaChartHeight - (groupedBarChartHeight - yScaleForGroupedBarChart(0))) + ")")
             .call(xAxisForGroupedBarChart);
-    
-    
+
+
     creatingGroupedBarChart(data);
 
     creatingLineChart(yScaleForPopulation, data, "Population", "Population");
@@ -317,38 +322,38 @@ function sortDataAndReplotTheChart(data,sortValue){
 
     creatingAreaChart(yScaleForAvgMobileDataSpeed, data, "Avg mobile data speed", "avgMobileDataSpeed");
     creatingAreaChart(yScaleForAvgTimeSpentOnSocialMedia, data, "Avg time spent on social media", "avgTimeSpentOnSocialMedia");
-        console.log(countryCode);
-        
-        
-     
+    console.log(countryCode);
+
+
+
     //Adding Bubbles To Area Chart
     svgForAreaChart.selectAll(".bub1").data(data).enter().append("circle").attr("class", "bub1")
             .attr("cx", function (d) {
-                return xScale(d["ISO Country Code"]);
+                return (margin + xScale(d["ISO Country Code"]));
             })
             .attr("cy", function (d) {
                 return yScaleForAvgMobileDataSpeed(d["Avg mobile data speed"]);
             })
-            .attr("r", "3").attr("fill", "red")
+            .attr("r", "3").attr("fill", "rgb(175, 113, 42)")
             .append("svg:title").text(function (d) {
         return ("Country: " + d["Country"] + "\n" + "Avg. Mobile Data Speed: " + d["Avg mobile data speed"] + "Mbps");
     });
 
     svgForAreaChart.selectAll(".bub2").data(data).enter().append("circle").attr("class", "bub2")
             .attr("cx", function (d) {
-                return xScale(d["ISO Country Code"]);
+                return (margin + xScale(d["ISO Country Code"]));
             })
             .attr("cy", function (d) {
                 return yScaleForAvgTimeSpentOnSocialMedia(d["Avg time spent on social media"]);
             })
-            .attr("r", "3").attr("fill", "gray")
+            .attr("r", "3").attr("fill", "rgb(255, 178, 0)")
             .append("svg:title").text(function (d) {
-        return ("Country: " + d["Country"] + "\n" + "Avg. Time Spent On Social Media: " + d["Avg time spent on social media"]+"h");
+        return ("Country: " + d["Country"] + "\n" + "Avg. Time Spent On Social Media: " + d["Avg time spent on social media"] + "h");
     });
 
-svgForLineChart.selectAll(".bub3").data(data).enter().append("circle").attr("class", "bub3")
+    svgForLineChart.selectAll(".bub3").data(data).enter().append("circle").attr("class", "bub3")
             .attr("cx", function (d) {
-                return xScale(d["ISO Country Code"]);
+                return (margin + xScale(d["ISO Country Code"]));
             })
             .attr("cy", function (d) {
                 return yScaleForPopulation(d["Population"]);
@@ -357,9 +362,9 @@ svgForLineChart.selectAll(".bub3").data(data).enter().append("circle").attr("cla
             .append("svg:title").text(function (d) {
         return ("Country: " + d["Country"] + "\n" + "Population: " + d["Population"]);
     });
-svgForLineChart.selectAll(".bub4").data(data).enter().append("circle").attr("class", "bub4")
+    svgForLineChart.selectAll(".bub4").data(data).enter().append("circle").attr("class", "bub4")
             .attr("cx", function (d) {
-                return xScale(d["ISO Country Code"]);
+                return (margin + xScale(d["ISO Country Code"]));
             })
             .attr("cy", function (d) {
                 return yScaleForGDP(d["GDP per capita (nominal)"]);
@@ -373,14 +378,14 @@ svgForLineChart.selectAll(".bub4").data(data).enter().append("circle").attr("cla
             .classed("grid-line", true)
             .attr("x1", 0)
             .attr("y1", 0)
-            .attr("x2", width)
+            .attr("x2", width - (2 * margin))
             .attr("y2", 0);
 
     d3.selectAll("g.yAxisR g.tick").append("line")
             .classed("grid-line", true)
             .attr("x1", 0)
             .attr("y1", 0)
-            .attr("x2", width)
+            .attr("x2", -(width - (2 * margin)))
             .attr("y2", 0);
 
 
@@ -390,14 +395,15 @@ svgForLineChart.selectAll(".bub4").data(data).enter().append("circle").attr("cla
     color.range(["#003300", "#FF5722"]);
     legend(svgForLineChart, ["GDP per capita (nominal)", "Population"]);
 
-    
+
+
 }
 
 
 //Now geting data from CSV File And Extract all the data in an array (its an array of objects) and modify as our requirement. 
 d3.csv("Data.csv", function (error, data) {
 
-            countryCode = [],
+    countryCode = [],
             socialMedia = d3.keys(data[0]).filter(function (key) {
         return (key == "% use social media") || (key == "% use social media on mobile") || (key == "% bought online on mobile");
     });
@@ -436,12 +442,12 @@ d3.csv("Data.csv", function (error, data) {
     xScaleForInnerElementInGroupedBarChart.domain(socialMedia).rangeRoundBands([0, xScaleForGroupedBarChart.rangeBand()]);
 
     //Assigning domain for yScaleForPopulation & yScaleForGDP
-    yScaleForPopulation.domain([0, Math.round(2 * maxPopulation)]);
-    yScaleForGDP.domain([0, Math.round(2 * maxGDP)]);
+    yScaleForPopulation.domain([0, Math.round(1.6 * maxPopulation)]);
+    yScaleForGDP.domain([0, Math.round(1.6 * maxGDP)]);
 
     //Assigning domain for yScaleForAvgMobileDataSpeed & yScaleForAvgTimeSpentOnSocialMedia
-    yScaleForAvgMobileDataSpeed.domain([0, Math.round(2.6 * maxAvgMobileDataSpeed)]);
-    yScaleForAvgTimeSpentOnSocialMedia.domain([0, Math.round(2.6 * maxAvgTimeSpentOnSocialMedia)]);
+    yScaleForAvgMobileDataSpeed.domain([0, Math.round(1.65 * maxAvgMobileDataSpeed)]);
+    yScaleForAvgTimeSpentOnSocialMedia.domain([0, Math.round(1.6 * maxAvgTimeSpentOnSocialMedia)]);
 
     creatingMainSvg();
     creatingLineChartSvg();
@@ -451,20 +457,21 @@ d3.csv("Data.csv", function (error, data) {
     //Appening X-Axis for Line Chart To mainSVG
     d3.select(".mainSVG").append("g")
             .attr("class", "xAxis")
-            .attr("transform", "translate(" + margin + "," + (height + margin - (lineChartHeight - yScaleForGDP(0))) + ")")
+            .attr("transform", "translate(" + margin + "," + (height - margin - (lineChartHeight - yScaleForGDP(0))) + ")")
             .call(xAxis);
 
     //Appening X-Axis for Area Chart To mainSVG
     d3.select(".mainSVG").append("g")
             .attr("class", "xAxis")
-            .attr("transform", "translate(" + margin + "," + (height + margin - lineChartHeight - (areaChartHeight - yScaleForAvgTimeSpentOnSocialMedia(0))) + ")")
+            .attr("transform", "translate(" + margin + "," + (height - margin - lineChartHeight - (areaChartHeight - yScaleForAvgTimeSpentOnSocialMedia(0))) + ")")
             .call(xAxis);
 
     //Appening X-Axis For Grouped Bar Chart
     d3.select(".mainSVG").append("g")
             .attr("class", "xAxis")
-            .attr("transform", "translate(" + margin + "," + (height + margin - lineChartHeight - areaChartHeight - (groupedBarChartHeight - yScaleForGroupedBarChart(0))) + ")")
+            .attr("transform", "translate(" + margin + "," + (height - margin - lineChartHeight - areaChartHeight - (groupedBarChartHeight - yScaleForGroupedBarChart(0))) + ")")
             .call(xAxisForGroupedBarChart);
+
 
     creatingGroupedBarChart(data);
 
@@ -479,31 +486,31 @@ d3.csv("Data.csv", function (error, data) {
     //Adding Bubbles To Area Chart
     svgForAreaChart.selectAll(".bub1").data(data).enter().append("circle").attr("class", "bub1")
             .attr("cx", function (d) {
-                return xScale(d["ISO Country Code"]);
+                return (margin + xScale(d["ISO Country Code"]));
             })
             .attr("cy", function (d) {
                 return yScaleForAvgMobileDataSpeed(d["Avg mobile data speed"]);
             })
-            .attr("r", "3").attr("fill", "red")
+            .attr("r", "3").attr("fill", "rgb(175, 113, 42)")
             .append("svg:title").text(function (d) {
         return ("Country: " + d["Country"] + "\n" + "Avg. Mobile Data Speed: " + d["Avg mobile data speed"] + "Mbps");
     });
 
     svgForAreaChart.selectAll(".bub2").data(data).enter().append("circle").attr("class", "bub2")
             .attr("cx", function (d) {
-                return xScale(d["ISO Country Code"]);
+                return (margin + xScale(d["ISO Country Code"]));
             })
             .attr("cy", function (d) {
                 return yScaleForAvgTimeSpentOnSocialMedia(d["Avg time spent on social media"]);
             })
-            .attr("r", "3").attr("fill", "gray")
+            .attr("r", "3").attr("fill", "rgb(255, 178, 0)")
             .append("svg:title").text(function (d) {
-        return ("Country: " + d["Country"] + "\n" + "Avg. Time Spent On Social Media: " + d["Avg time spent on social media"]+"h");
+        return ("Country: " + d["Country"] + "\n" + "Avg. Time Spent On Social Media: " + d["Avg time spent on social media"] + "h");
     });
 
-svgForLineChart.selectAll(".bub3").data(data).enter().append("circle").attr("class", "bub3")
+    svgForLineChart.selectAll(".bub3").data(data).enter().append("circle").attr("class", "bub3")
             .attr("cx", function (d) {
-                return xScale(d["ISO Country Code"]);
+                return (margin + xScale(d["ISO Country Code"]));
             })
             .attr("cy", function (d) {
                 return yScaleForPopulation(d["Population"]);
@@ -512,9 +519,9 @@ svgForLineChart.selectAll(".bub3").data(data).enter().append("circle").attr("cla
             .append("svg:title").text(function (d) {
         return ("Country: " + d["Country"] + "\n" + "Population: " + d["Population"]);
     });
-svgForLineChart.selectAll(".bub4").data(data).enter().append("circle").attr("class", "bub4")
+    svgForLineChart.selectAll(".bub4").data(data).enter().append("circle").attr("class", "bub4")
             .attr("cx", function (d) {
-                return xScale(d["ISO Country Code"]);
+                return (margin + xScale(d["ISO Country Code"]));
             })
             .attr("cy", function (d) {
                 return yScaleForGDP(d["GDP per capita (nominal)"]);
@@ -528,14 +535,14 @@ svgForLineChart.selectAll(".bub4").data(data).enter().append("circle").attr("cla
             .classed("grid-line", true)
             .attr("x1", 0)
             .attr("y1", 0)
-            .attr("x2", width)
+            .attr("x2", width - (2 * margin))
             .attr("y2", 0);
 
     d3.selectAll("g.yAxisR g.tick").append("line")
             .classed("grid-line", true)
             .attr("x1", 0)
             .attr("y1", 0)
-            .attr("x2", width)
+            .attr("x2", -(width - (2 * margin)))
             .attr("y2", 0);
 
 
@@ -551,80 +558,82 @@ svgForLineChart.selectAll(".bub4").data(data).enter().append("circle").attr("cla
             sortDataAndReplotTheChart(data, $(this).val());
         });
 
-        $(".mainSVG").on("click", ".svgForGroupedBarChart .legend:eq(0)",function () {
+        $(".mainSVG").on("click", ".svgForGroupedBarChart .legend:eq(0)", function () {
             $(".country rect:nth-child(1)").toggle(400);
-            
-           if(parseFloat($(".svgForGroupedBarChart .legend:eq(0)").css("opacity")).toFixed(1) == 0.4)
-              $(".svgForGroupedBarChart .legend:eq(0)").css("opacity" ,"1");
 
-          else
-              $(".svgForGroupedBarChart .legend:eq(0)").css("opacity" ,"0.4"); 
+            if (parseFloat($(".svgForGroupedBarChart .legend:eq(0)").css("opacity")).toFixed(1) == 0.4)
+                $(".svgForGroupedBarChart .legend:eq(0)").css("opacity", "1");
+
+            else
+                $(".svgForGroupedBarChart .legend:eq(0)").css("opacity", "0.4");
         });
 
-        $(".mainSVG").on("click", ".svgForGroupedBarChart .legend:eq(1)",function () {
+        $(".mainSVG").on("click", ".svgForGroupedBarChart .legend:eq(1)", function () {
             $(".country rect:nth-child(2)").toggle(400);
-            if(parseFloat($(".svgForGroupedBarChart .legend:eq(1)").css("opacity")).toFixed(1) == 0.4)
-              $(".svgForGroupedBarChart .legend:eq(1)").css("opacity" ,"1"); 
-     
-          else
-              $(".svgForGroupedBarChart .legend:eq(1)").css("opacity" ,"0.4"); 
+            if (parseFloat($(".svgForGroupedBarChart .legend:eq(1)").css("opacity")).toFixed(1) == 0.4)
+                $(".svgForGroupedBarChart .legend:eq(1)").css("opacity", "1");
+
+            else
+                $(".svgForGroupedBarChart .legend:eq(1)").css("opacity", "0.4");
         });
 
         $(".mainSVG").on("click", ".svgForGroupedBarChart .legend:eq(2)", function () {
             $(".country rect:nth-child(3)").toggle(400);
-            if(parseFloat($(".svgForGroupedBarChart .legend:eq(2)").css("opacity")).toFixed(1) == 0.4)
-              $(".svgForGroupedBarChart .legend:eq(2)").css("opacity" ,"1"); 
-     
-          else
-              $(".svgForGroupedBarChart .legend:eq(2)").css("opacity" ,"0.4"); 
+            if (parseFloat($(".svgForGroupedBarChart .legend:eq(2)").css("opacity")).toFixed(1) == 0.4)
+                $(".svgForGroupedBarChart .legend:eq(2)").css("opacity", "1");
+
+            else
+                $(".svgForGroupedBarChart .legend:eq(2)").css("opacity", "0.4");
         });
 
-        $(".mainSVG").on("click", ".svgForAreaChart .legend:eq(0)",function () {
+        $(".mainSVG").on("click", ".svgForAreaChart .legend:eq(0)", function () {
             $(".avgTimeSpentOnSocialMedia").toggle();
             $(".bub2").toggle();
-            if(parseFloat($(".svgForAreaChart .legend:eq(0)").css("opacity")).toFixed(1) == 0.4)
-              $(".svgForAreaChart .legend:eq(0)").css("opacity" ,"1"); 
-     
-          else
-              $(".svgForAreaChart .legend:eq(0)").css("opacity" ,"0.4"); 
+            if (parseFloat($(".svgForAreaChart .legend:eq(0)").css("opacity")).toFixed(1) == 0.4)
+                $(".svgForAreaChart .legend:eq(0)").css("opacity", "1");
+
+            else
+                $(".svgForAreaChart .legend:eq(0)").css("opacity", "0.4");
         });
 
-        $(".mainSVG").on("click", ".svgForAreaChart .legend:eq(1)" ,function () {
+        $(".mainSVG").on("click", ".svgForAreaChart .legend:eq(1)", function () {
             $(".avgMobileDataSpeed").toggle();
             $(".bub1").toggle();
-            if(parseFloat($(".svgForAreaChart .legend:eq(1)").css("opacity")).toFixed(1) == 0.4)
-              $(".svgForAreaChart .legend:eq(1)").css("opacity" ,"1"); 
-     
-          else
-              $(".svgForAreaChart .legend:eq(1)").css("opacity" ,"0.4"); 
+            if (parseFloat($(".svgForAreaChart .legend:eq(1)").css("opacity")).toFixed(1) == 0.4)
+                $(".svgForAreaChart .legend:eq(1)").css("opacity", "1");
+
+            else
+                $(".svgForAreaChart .legend:eq(1)").css("opacity", "0.4");
         });
 
-        $(".mainSVG").on("click", ".svgForLineChart .legend:eq(0)" ,function () {
+        $(".mainSVG").on("click", ".svgForLineChart .legend:eq(0)", function () {
             $(".GDPLine").toggle();
             $(".bub4").toggle();
-            if(parseFloat($(".svgForLineChart .legend:eq(0)").css("opacity")).toFixed(1) == 0.4)
-              $(".svgForLineChart .legend:eq(0)").css("opacity" ,"1"); 
-     
-          else
-              $(".svgForLineChart .legend:eq(0)").css("opacity" ,"0.4"); 
+            if (parseFloat($(".svgForLineChart .legend:eq(0)").css("opacity")).toFixed(1) == 0.4)
+                $(".svgForLineChart .legend:eq(0)").css("opacity", "1");
+
+            else
+                $(".svgForLineChart .legend:eq(0)").css("opacity", "0.4");
         });
 
-        $(".mainSVG").on("click", ".svgForLineChart .legend:eq(1)",function () {
+        $(".mainSVG").on("click", ".svgForLineChart .legend:eq(1)", function () {
             $(".Population").toggle();
             $(".bub3").toggle();
-            if(parseFloat($(".svgForLineChart .legend:eq(1)").css("opacity")).toFixed(1) == 0.4)
-              $(".svgForLineChart .legend:eq(1)").css("opacity" ,"1"); 
-     
-          else
-              $(".svgForLineChart .legend:eq(1)").css("opacity" ,"0.4");
+            if (parseFloat($(".svgForLineChart .legend:eq(1)").css("opacity")).toFixed(1) == 0.4)
+                $(".svgForLineChart .legend:eq(1)").css("opacity", "1");
+
+            else
+                $(".svgForLineChart .legend:eq(1)").css("opacity", "0.4");
         });
-        
+
         $('#embed').hide();
-        $("#share").click(function(){
-        $("#embed").toggle();
-        var url=window.location.href;
-        var string='<iframe src='+url+' height='+h +' width='+ w+'></iframe>';
-        $('#embed').val(string);
+        $("#share").click(function () {
+            $("#embed").toggle();
+
+            var url = window.location.href;
+            var string = '<iframe src=' + url + ' height=' + h + ' width=' + w + '></iframe>';
+            $('#embed').val(string);
+            $("#embed").select();
         });
     });
 });

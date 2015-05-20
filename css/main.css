@@ -1,92 +1,148 @@
 
-                body { font: 12px Arial;}
+body { font: 11px Arial;}
 
-                path { 
-                    stroke: steelblue;
-                    opacity: 1 !important;
-                    stroke-width: 2;
-                    fill: none;
-                }
+path { 
 
-                .xAxis path,
-                .xAxis line {
-                    fill: none;
-                    stroke: grey;
-                    stroke-width: 1;
-                    shape-rendering: crispEdges;
-                }
-                
-                .grid-line{
-                    stroke: gray;
-                    stroke-width: 1px;
-                    opacity: 0.5;
-                }
-                
-                .GDPLine{stroke:#FF5722;}
-                .Population{stroke:#003300;}
-                
-                .avgMobileDataSpeed {
-                fill: #E07628;
-                }
-                
-                .avgTimeSpentOnSocialMedia{
-                    
-                    fill: rgba(254, 181, 6, 0.34);
-                }
-                
-                #twitter_integration{
-                    position: absolute;
-                    bottom: 1%;
-                    right: 5%;
-                    padding: 10px;             
-                }
-                
-                #fb_integration
-                {
-                   position: absolute;
-                    bottom: 1.5%;
-                    right: 12%;
-                    padding: 10px; 
-                  
+    opacity: 1 !important;
+    stroke-width: 2;
+    fill: none;
+    stroke: #CACACA;
 }
-                
-                #embedChart{
-                    
-                    position: absolute;
-                    bottom: 1.4%;
-                    right: 19.5%;
-                    padding: 10px; 
-                    
-                }
-                .select-box {
-                    padding: 0;
-                    margin: 0;
-                    border: 1px solid #ccc;
-                    width: 225px;
-                    border-radius: 3px;
-                    overflow: hidden;
-                    background-color: #fff;
-                    text-align: center;
-                    position: absolute;
-                    top: 10px;
-                    left: 40px;
-                    //background: #fff url("http://www.scottgood.com/jsg/blog.nsf/images/arrowdown.gif") no-repeat 90% 50%;
-                }
 
-                .select-box select {
-                    text-align: center;
-                    padding: 5px 8px;
-                    width: 100%;
-                    border: none;
-                    box-shadow: none;
-                    background-color: transparent;
+.xAxis path, 
+.xAxis line {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+}
 
-                }
+.yAxisL path, 
+.yAxisL line ,
+.yAxisR path, 
+.yAxisR line {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+    opacity: 0.1;
+}
 
-                .select-box select:focus {
-                    outline: none;
-                }
-                
-                .legend{
-                   cursor: pointer;
-                }
+.grid-line{
+    stroke: gray;
+    stroke-width: 1px;
+    opacity: 0.5;
+}
+
+.GDPLine{stroke:#FF5722;}
+.Population{stroke:#003300;}
+
+.avgMobileDataSpeed {
+    stroke: rgb(165, 119, 66);
+    fill: #E07628;
+}
+
+.avgTimeSpentOnSocialMedia{
+    stroke:rgb(252, 197, 70);
+    fill: rgba(254, 181, 6, 0.34);
+}
+
+#twitter_integration{
+    position: absolute;
+    right: 10%;
+    bottom: 0%;
+    padding: 10px;             
+}
+
+#fb_integration
+{
+    position: absolute;
+    bottom: .2%;
+    right: 17%;
+    padding: 10px; 
+
+}
+
+#embedChart{
+
+    position: absolute;
+    bottom: 0.1%;
+    right: 24%;
+    padding: 10px; 
+
+}
+.select-box {
+    padding: 0;
+    margin: 0;
+    border: 1px solid #ccc;
+    width: 225px;
+    border-radius: 3px;
+    overflow: hidden;
+    background-color: #fff;
+    text-align: center;
+    position: absolute;
+    top: 2%;
+    right: 10%;
+    //background: #fff url("http://www.scottgood.com/jsg/blog.nsf/images/arrowdown.gif") no-repeat 90% 50%;
+}
+
+.select-box select {
+    text-align: center;
+    padding: 5px 8px;
+    width: 100%;
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
+
+}
+
+.select-box select:focus {
+    outline: none;
+}
+
+.legend{
+    cursor: pointer;
+    width: 11px !important;
+}
+
+.footer{
+    fontsize: 1.5em;
+    Opacity: 0.5;
+    position: absolute;
+    bottom: 0%;
+    left: 8%;
+
+}
+
+#title{
+    font-size: 22px;
+    position:absolute;
+    left: 40%;
+    top: 0%;
+    
+}
+
+@media (min-width:310px) and (max-width:480px){
+    body{
+        font-size: 2px;
+    }
+
+    .legend rect{
+        width: 31px !important;
+        height: 20px !important;
+
+    }
+
+    .select-box{
+
+        width: 100px;
+        height: 30px;
+
+    }
+    .select-box select {
+        text-align: center;
+        padding: 5px 8px;
+        width: 100%;
+        font-size: 10px;
+    }
+}
