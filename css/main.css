@@ -95,11 +95,11 @@ path {
     padding: 0;
     margin: 0;
     border: 1px solid #ccc;
-    width: 90px;
+    //width: 90px;
     border-radius: 3px;
     overflow: hidden;
     background-color: #fff;
-    text-align: center;
+    //text-align: center;
     position: absolute;
     top: 5%;
     right: 10%;
@@ -107,9 +107,10 @@ path {
 }
 
 .select-box select {
-    text-align: center;
+    float:left;
+    //text-align: left;
     padding: 5px 8px;
-    width: 100%;
+    width: 95px;
     border: none;
     box-shadow: none;
     background-color: transparent;
@@ -137,8 +138,8 @@ path {
 #title{
     font-size: 22px;
     position:absolute;
-    left: 25%;
-    top: 2%;
+    left: 7%;
+    top: 1%;
     
 }
 
@@ -156,12 +157,7 @@ path {
     body{
         font-size: 2px;
     }
-/*
-    .legend rect{
-        width: 20px !important;
-        height: 5px !important;
 
-    }*/
 
     .select-box{
 
@@ -176,13 +172,13 @@ path {
         
         font-size: 10px;
     }
-    
+
     #title{
     font-size: 10px;
     height: 20px;
-    position:absolute;
+/*    position:absolute;
     left: 40%;
-    top: 5%;
+    top: 5%;*/
     
 }
 }
