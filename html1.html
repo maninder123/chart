@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="./css/style.css">
+        <script src="scripts/jquery.js"></script>
+        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+        <script src="scripts/d3script1.js"></script>
+        <script type="text/javascript" src="http://www.amcharts.com/lib/3/amcharts.js"></script>
+        <script type="text/javascript" src="http://www.amcharts.com/lib/3/serial.js"></script>
+        <script type="text/javascript" src="http://www.amcharts.com/lib/3/themes/none.js"></script>
+    </head>
+    <body>
+        <div id="fb-root"></div>
+        <script>(function (d, s, id) {
+                window.fbAsyncInit = function () {
+                    FB.init({
+                        appId: '792966607477104',
+                        xfbml: true,
+                        version: 'v2.3'
+                    });
+                };
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id))
+                    return;
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));</script>
+        <div id="chart"></div>
+        <svg id="visualisation" width="1000" height="500"></svg><br>
+        <input type="button" id="share" value="embed">
+        <input type="text" id="embed">
+      <div class="fb-share-button" data-href="http://ahextechnologies.com/test-d3/html1.html" data-width="200" data-type="button_count"></div>
+        <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://ahextechnologies.com/test-d3/html1.html"  data-size="large">Tweet</a>
+        <script>!function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
+        if (!d.getElementById(id)) {
+            js = d.createElement(s);
+            js.id = id;
+            js.src = p + '://platform.twitter.com/widgets.js';
+            fjs.parentNode.insertBefore(js, fjs);
+        }
+    }(document, 'script', 'twitter-wjs');</script>
+    </body>
+</html>

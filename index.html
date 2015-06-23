@@ -1,41 +1,38 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>memestreme - Mobile Social Media: Global Comparisons</title>
+        <title> memestreme - Mobile Social Media: Global Comparisons </title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="js/libs/jquery/jquery.js"></script>
         <script src="js/libs/d3/d3.js"></script>
         <script src="js/libs/tooltipsy/tooltipsy.js"></script>
-        <script src="js/main_cleaned.js"></script>
+        
         <link rel="stylesheet" type="text/css" href="css/main.css">
 
     </head>
 
     <body>
     
-        <div id="title"><p>
-                <b>The State of Mobile Social Media</b>
-            </p>
-
-        </div>
-    
-        <div class = "select-box">
-
-            <select>
+        <h1 style = " text-align: center; " > Mobile social media: Global Comparisons </h1>
+        
+        <select>
 
                 <option value="Population">Sort By</option>
                 <option value="Population">Population</option>
-                <option value="GDP per capita (nominal)">GDP per Capita (nominal)</option>
-                <option value="% use social media">% Use Social Media</option>
-                <option value="% use social media on mobile">% Use Social Media on Mobile</option>
-                <option value="% bought online on mobile">% Bought Online on Mobile</option>
-                <option value="Avg mobile data speed">Avg Mobile Data Speed</option>
-                <option value="Avg time spent on social media">Avg Time Spent on Social Media</option>
+                <option value="GDP Per Capita ( Nominal )">GDP Per Capita ( Nominal )</option>
+                <option value="% Use Social Media">% Use Social Media</option>
+                <option value="% Use Social Media on Mobile">% Use Social Media on Mobile</option>
+                <option value="% Bought Online on Mobile">% Bought Online on Mobile</option>
+                <option value="Avg mobile Data Speed">Avg mobile Data Speed</option>
+                <option value="Avg Time Spent on Social Media">Avg Time Spent on Social Media</option>
             </select> 
-        </div>
+        
+        <div class="clear"></div>
 
-        <div id ="embeddedCointer">
+        <div id = "chart-container"></div>
+        
+        <div id ="shareCointer">
         <div id="embedChart">
             <button type="button" id="share"><b>Embed</b></button>
             <input type="text" id="embed">
@@ -85,13 +82,16 @@
 
         </div>
         </div>
+        
         <div class = "footer">
             <p>
-                Data Sources:<br>
+                Data Sources: <br>
                 Wikipedia, Statista, Worldometer, </br>
                 Trading Economics, We Are Social, NetRader.
             </p>
 
         </div>
+        
+        <script src="js/main_cleaned.js"></script>
     </body>
 </html>
