@@ -27,7 +27,7 @@ d3.select( "center" ).remove();
 
 //Defining Color-scale For Bar Chart
     color = d3.scale.ordinal()
-                    .range( [ "#0A74FF" ,"#338BFF", "#5CA3FF" ] );
+                    .range( [ "#0047A3" ,"#006AF5", "#5CA3FF" ] );
 
 //Creating X-Axis Common for both area chart and line chart           
     xAxis = d3.svg.axis().scale( xScale ).orient( "bottom" );
@@ -175,18 +175,23 @@ function legend( svg, data ) {
         legendWidth =  ( width < 500 ) ? 10 : 15,
         yValueOfText = ( width < 500 ) ? 2 : 6;
         
+        console.log( data.slice().length );
+        var noOflegends = data.slice().length;
     var legend = svg.selectAll( ".legend" )
                     .data( data.slice() )
                     .enter()
                     .append( "g" )
                      .attr( "class", "legend" )
                      .attr( "transform", function( d, i ) {
-                         if( ( width < 600 ) && (i === 5) )
+                         if( ( width < 400 ) && (noOflegends == 3) && (i === 1) ) {
                  var yTranslate = (height*0.33*0.34);
+                     //noOflegends = 2;
+                     //i = 1;
+                     }
                  else
                     yTranslate = (height*0.33*0.25);
                     //var yTranslate = ( w < 768 ) ? ( width*2  * ( 0.09 * i ) ) : ( width * 0.09 );
-                return "translate( " + ( width * 0.3 * i ) + "," + yTranslate + " )";
+                return "translate( " + ( ( width / noOflegends ) * i ) + "," + yTranslate + " )";
             } );
 
         legend.append( "rect" )
