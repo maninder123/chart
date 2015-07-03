@@ -4,16 +4,16 @@
         <title> memestreme - Mobile Social Media: Global Comparisons </title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src="js/libs/jquery/jquery.js"></script>
-        <script src="js/libs/d3/d3.js"></script>
-        <script src="js/libs/tooltipsy/tooltipsy.js"></script>
+        <script src="scripts/libs/jquery/jquery.js"></script>
+        <script src="scripts/libs/d3/d3.js"></script>
+        <script src="scripts/libs/tooltipsy/tooltipsy.js"></script>
         <link rel="stylesheet" type="text/css" href="js/libs/bootstrap.min.css" />
         <link rel="stylesheet" type="text/css" href="css/main.css" />
         <script src="js/libs/bootstrap.min.js"></script>
 
     </head>
     <body>
-        <h1 style = " text-align: center; " > Mobile social media: Global Comparisons </h1>
+        <h2 style = " text-align: center; " > Mobile social media: Global Comparisons </h2>
 
         <select>
 
@@ -30,7 +30,8 @@
         <div class="clear"></div>
 
         <div id = "chart-container"></div>
-
+        
+        <div id = "chart-footer">
         <div id ="shareCointer">
             <div id="embedChart">
                 <button type="button" id="share"><b>Embed</b></button>
@@ -40,7 +41,7 @@
             <!--Twitter Integration-->
 
             <div id = "twitter_integration">
-                <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://http://ahextechnologies.com/test-d3/index.html">Tweet</a>
+                <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://www.rossdawson/frameworks/mobile-social-media-comparisons">Tweet</a>
                 <script>!function (d, s, id) {
                         var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
                         if (!d.getElementById(id)) {
@@ -77,29 +78,29 @@
                     }(document, 'script', 'facebook-jssdk'));
                 </script>
 
-                <div class="fb-share-button" data-href="http://ahextechnologies.com/test-d3/index.html" data-layout="button_count"></div>
+                <div class="fb-share-button" data-href="http://www.rossdawson/frameworks/mobile-social-media-comparisons" data-layout="button_count"></div>
 
             </div>
         </div>
-       
-            <div class="footer">
-                <div class="row">
-                    <div class="col-lg-4">
-                        <p>
+        <div class="m1"></div>
+            
+            <p>
                             Data Sources: <br>
                             Wikipedia, Statista, Worldometer, </br>
-                            Trading Economics, We Are Social, NetRader.
-                        </p>
-                    </div>
-                    <div class="col-lg-8">      
-                        <img src="images/logos/AHT-Logo_Transparent-50px (1).png" alt=""/>
-                        <img src="images/logos/CreatedBymemestreme-50px (2).png" alt=""/>
-                        <img src="images/logos/rdawson_150x50_rgb (2).png" alt=""/>
-                    </div>
-                    
-                </div>
-            </div>
-      
-        <script src="js/main_cleaned.js"></script>
+                            Trading Economics, We Are Social, NetRadar.
+                </p>
+               
+        <div class="clear"></div>
+        
+        
+        <a href="http://www.memestreme.com/" title="AHT - Group" id="memestreme-Logo"><img src="images/logos/memestreme-Logo.png" alt="memestreme-Logo"/></a>
+        <div class="m1"></div>
+        <a href="http://www.aht-group.com/" title="AHT - Group" id="AHT-Logo"><img src="images/logos/AHT-Logo.png" alt="AHT-Logo"/></a>
+        <a href="http://www.rossdawson.com/" title="AHT - Group" id="ROSSDRWSON-Logo"><img src="images/logos/ROSSDRWSON-Logo.png" alt="ROSSDRWSON-Logo"/></a>
+        
+             
+        </div>
+
+        <script src="scripts/main.js"></script>
     </body>
 </html>

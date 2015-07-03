@@ -54,9 +54,8 @@ path {
 
 #shareCointer {
     float: right;
-    margin-right: 6%;
     margin-top: 1%;
-    clear:  both;
+    
 }
 
 #twitter_integration {
@@ -80,7 +79,7 @@ path {
     bottom: 5px;
     display: inline-block;
     padding: 5px; 
-    font-size: 1em !important;
+    font-size: 11px !important;
 }
 
 #embed{
@@ -94,15 +93,14 @@ path {
     
 }
 
-.footer{
+#chart-footer{
     font-size: 1em;
-    opacity: 0.7;
-    float: left;
-    margin-left: 4%;
     
-}
-.logos{
-    margin-left:40px;
+    float: left;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    
 }
 
 .tooltipsy
@@ -126,10 +124,38 @@ path {
 
 @media ( min-width : 0px ) and ( max-width : 610px ) {
     body{
-        font-size: 5px;
-        font-weight: bold;
+        font-size: 7px;
+        //font-weight: bold;
     }
     
+    .m1{
+        clear: both;
+        
+    }
+    
+    #chart-footer{
+        
+        font-size: 8px;
+    }
+    
+    #chart-footer div[class=clear]{
+        clear: none;
+        
+    }
+    
+    #ROSSDRWSON-Logo{
+        
+        float: right !important;
+        
+    }
+    
+}
+
+#chart-footer p {
+    float: left;
+    display: inline-block;
+    margin-bottom: 0px;
+   
 }
 
 select{
@@ -148,3 +174,14 @@ select{
         border: 1px solid black;
         
     }
+    
+    #AHT-Logo, #ROSSDRWSON-Logo, #memestreme-Logo {
+    height:50px;
+    float: left;
+    
+}
+
+#memestreme-Logo{
+    
+    float: right;
+}
