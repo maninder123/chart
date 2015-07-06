@@ -348,20 +348,20 @@ function plotTheChartCointer() {
             fontSize = 14;
         
         svgForLineChart.append( "text" )
-                .attr( "y", ( lineChartHeight * 0.20 ) )
-                .attr( "x", width/2 )
+                .attr( "y", ( lineChartHeight * 0.25 ) )
+                .attr( "x", width * 0.35 )
                 .text( "Economic" )
                 .style( {"font-size": fontSize, "font-weight":"bold" });
         
         svgForAreaChart.append( "text" )
-                .attr( "y", ( areaChartHeight * 0.20 ) )
-                .attr( "x", width/2 )
+                .attr( "y", ( areaChartHeight * 0.22 ) )
+                .attr( "x", width * 0.35 )
                 .text( "Speed & Usage" )
                 .style( {"font-size": fontSize, "font-weight":"bold" });
         
         svgForGroupedBarChart.append( "text" )
-                .attr( "y", ( groupedBarChartHeight * 0.20 ) )
-                .attr( "x", width/2 )
+                .attr( "y", ( groupedBarChartHeight * 0.10 ) )
+                .attr( "x", width * 0.35 )
                 .text( "Population" )
                 .style( {"font-size": fontSize, "font-weight":"bold" });
         
