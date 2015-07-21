@@ -116,18 +116,33 @@ path {
 @media (min-width:610px) and (max-width:760px){
 
     body{
-        font-size: 8px;
+        font-size: 10px;
         font-weight: bold;
     }
-    
+    h2 {
+    font-size: 25px;
+    }
 }
 
-@media ( min-width : 0px ) and ( max-width : 610px ) {
+@media ( min-width : 10px ) and ( max-width : 610px ) {
     body{
-        font-size: 7px;
+        font-size: 9px;
         //font-weight: bold;
     }
-    
+    .legend {
+    cursor: pointer;
+    display: block;
+    min-width: 100%;
+}
+/*.textlegend{
+     font-size: 14px;
+}*/
+     h2 {
+    font-size: 14px;
+    margin: 18px auto;
+    max-width: 90%;
+    word-break: break-all;
+    }
     .m1{
         clear: both;
         

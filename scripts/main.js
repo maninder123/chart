@@ -26,8 +26,10 @@ d3.select( "center" ).remove();
     xScaleForInnerElementInGroupedBarChart = d3.scale.ordinal();
 
 //Defining Color-scale For Bar Chart
-    color = d3.scale.ordinal()
-                    .range( [ "#0047A3" ,"#006AF5", "#5CA3FF" ] );
+//    color = d3.scale.ordinal()
+//                    .range( [ "#0047A3" ,"#006AF5", "#5CA3FF" ] );
+            color= d3.scale.ordinal()
+                    .range( [ "rgb(0, 71, 163)" ,"rgb(0, 150, 245)", "rgb(160, 200, 255)" ] );
 
 //Creating X-Axis Common for both area chart and line chart           
     xAxis = d3.svg.axis().scale( xScale ).orient( "bottom" );
@@ -105,6 +107,7 @@ function creatingAreaChart( Data, yScale, areaName, parentNode, className ) {
 
 //Function For Crating Grouped Bar Chart
 function creatingGroupedBarChart( Data, parentNode, xScale, yScale, xScaleForInnerElement, groupName, innerElementsObject ) {
+ 
     //Creating Each country group in the svg and binding data to them
     var country = parentNode.selectAll( ".country" )
                             .data(Data)
@@ -134,7 +137,9 @@ function creatingGroupedBarChart( Data, parentNode, xScale, yScale, xScaleForInn
                 .attr( "y", function(d) { return yScale( d.value ); } )
                 .attr( "width", xScaleForInnerElement.rangeBand() )
                 .attr( "height", function(d) { return ( yScale(0) - yScale( d.value ) ); } )
-                .style( "fill", function(d) { return color( d.name ); } );
+                .style( "fill", function(d) { 
+//                   console.log(color(d.name))
+            return color( d.name ); } );
                 
    
 }
@@ -171,11 +176,11 @@ function creaingBubbleChart( Data, yScale, lineName, parentNode, className, bubb
 
 function legend( svg, data ) {
     
-    var legendHeight = ( width < 500 ) ? 5 : 10,
-        legendWidth =  ( width < 500 ) ? 10 : 15,
-        yValueOfText = ( width < 500 ) ? 2 : 6;
+    var legendHeight = ( width < 500 ) ? 7 : 12,
+        legendWidth =  ( width < 500 ) ? 13 : 18,
+        yValueOfText = ( width < 500 ) ? 4 : 8;
         
-        console.log( data.slice().length );
+      
         var noOflegends = data.slice().length;
     var legend = svg.selectAll( ".legend" )
                     .data( data.slice() )
@@ -183,20 +188,42 @@ function legend( svg, data ) {
                     .append( "g" )
                      .attr( "class", "legend" )
                      .attr( "transform", function( d, i ) {
-                         if( ( width < 400 ) && (noOflegends == 3) && (i === 1) ) {
-                 var yTranslate = (height*0.33*0.34);
-                     //noOflegends = 2;
-                     //i = 1;
+                         if( ( width < 400 ) && (noOflegends == 3)) {
+                          if(i == 0){
+                 var yTranslate = 15/*(height*0.33*0.28)*/;
+          var xTranslate =0
+                          }
+                          else if(i == 1){
+                             var yTranslate = 25/*(height*0.33*0.32)*/;  
+                             var xTranslate =0
+                          }else{
+                              var yTranslate = 35/*(height*0.33*0.36);*/
+                               var xTranslate =0
+                          }
+                 
                      }
-                 else
+                     else if(( width < 400 ) && (noOflegends == 2)){
+                         if(i == 0){
+                 var yTranslate = 28/*(height*0.33*0.28)*/;
+          var xTranslate =0
+                          }
+                          else if(i == 1){
+                             var yTranslate = 38/*(height*0.33*0.32)*/;  
+                             var xTranslate =0
+                          }
+                     }
+                 else{
                     yTranslate = (height*0.33*0.25);
                     //var yTranslate = ( w < 768 ) ? ( width*2  * ( 0.09 * i ) ) : ( width * 0.09 );
-                return "translate( " + ( ( width / noOflegends ) * i ) + "," + yTranslate + " )";
+                    xTranslate =( width / noOflegends ) * i
+              
+                 }
+                   return "translate( " + ( xTranslate ) + "," + yTranslate + " )";
             } );
 
         legend.append( "rect" )
                 .attr( "x", function(d) {
-                    return ( margin*0.1 );
+                                       return ( margin*0.1 );
                 } )
                 .attr( "width", legendWidth )
                 .attr( "height", legendHeight )
@@ -206,7 +233,7 @@ function legend( svg, data ) {
                 .attr( "x", function( d, i ) {
                     return ( margin*0.20  + legendWidth );
                 })
-                .attr( "y", yValueOfText )
+                .attr( "y", (parseInt(yValueOfText)) )
                 .attr( "dy", ".30em" )
                 .style( "text-anchor", "start" )
                 .text(function (d) {
@@ -348,26 +375,27 @@ function plotTheChartCointer() {
             fontSize = 14;
         
         svgForLineChart.append( "text" )
-                .attr( "y", ( lineChartHeight * 0.25 ) )
-                .attr( "x", width * 0.35 )
+                .attr( "y", ( lineChartHeight * 0.20 ) )/*0.25*/
+                .attr( "x", 20)/*width * 0.35*/
                 .text( "Economic" )
                 .style( {"font-size": fontSize, "font-weight":"bold" });
         
         svgForAreaChart.append( "text" )
-                .attr( "y", ( areaChartHeight * 0.22 ) )
-                .attr( "x", width * 0.35 )
+                .attr( "y", ( areaChartHeight * 0.20 ) )/*0.22*/
+                .attr( "x", 20 )
                 .text( "Speed & Usage" )
                 .style( {"font-size": fontSize, "font-weight":"bold" });
         
         svgForGroupedBarChart.append( "text" )
                 .attr( "y", ( groupedBarChartHeight * 0.10 ) )
-                .attr( "x", width * 0.35 )
+                .attr( "x", 20)
                 .text( "Population" )
                 .style( {"font-size": fontSize, "font-weight":"bold" });
         
 }
 
 function plotTheChart( data ) {
+//    console.log("plot the chart")
         creatingLineChart( data, yScaleForPopulation, "Population", svgForLineChart, "Population" );
         creatingLineChart( data, yScaleForGDP, "GDP Per Capita ( Nominal )", svgForLineChart, "GDPLine" );
     
@@ -537,7 +565,11 @@ d3.csv( "Data.csv", function( error, data ) {
         $( "#share" ).click( function() {
             $( "#embed" ).toggle();
             var url = window.location.href;
-            var string = '<iframe src=' + url + ' height=' + h + ' width=' + w + '></iframe>';
+           
+            var string = '<iframe src=' + url + ' height=' + h + ' width=' + width + ' marginheight=0 marginwidth=0 frameborder=0></iframe>';
+            
+//            var string='<ifram src='+url+ 'height=1260 width='+w+ 'marginheight=0 marginwidth=0 frameborder=0></iframe>';
+//            width=&#039; + parentNodeWidth + &#039; height=&quot;1260&quot; marginheight=&quot;0&quot; marginwidth=&quot;0&quot; frameborder=&quot;0&quot;
             $( "#embed" ).val( string );
             $( "#embed" ).select();
         });
