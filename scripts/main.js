@@ -1,9 +1,13 @@
-
 function init() {
 //Clearing Any element in the body before ploting the graph
 d3.select( "center" ).remove();
 
-                        h = Math.round( window.innerHeight ); //Geting the height of the browser (Inner Height)
+                         tempheight = Math.round( window.innerHeight )-100; //Geting the height of the browser (Inner Height)
+                       if(tempheight < 550){
+                           h = 550;
+                       }else{
+                           h=tempheight;
+                       }
                         w = Math.round( window.innerWidth );  //Geting the width of the browser (Inner Width)
                    margin = ( w <= 600 ) ? 40 : 50;
                    
@@ -204,16 +208,16 @@ function legend( svg, data ) {
                      }
                      else if(( width < 400 ) && (noOflegends == 2)){
                          if(i == 0){
-                 var yTranslate = 28/*(height*0.33*0.28)*/;
+                 var yTranslate = 35/*(height*0.33*0.28)*/;
           var xTranslate =0
                           }
                           else if(i == 1){
-                             var yTranslate = 38/*(height*0.33*0.32)*/;  
+                             var yTranslate = 45/*(height*0.33*0.32)*/;  
                              var xTranslate =0
                           }
                      }
                  else{
-                    yTranslate = (height*0.33*0.25);
+                    yTranslate = (height*0.33*0.25)-5;
                     //var yTranslate = ( w < 768 ) ? ( width*2  * ( 0.09 * i ) ) : ( width * 0.09 );
                     xTranslate =( width / noOflegends ) * i
               
@@ -387,7 +391,7 @@ function plotTheChartCointer() {
                 .style( {"font-size": fontSize, "font-weight":"bold" });
         
         svgForGroupedBarChart.append( "text" )
-                .attr( "y", ( groupedBarChartHeight * 0.10 ) )
+                .attr( "y", ( groupedBarChartHeight * 0.10 )-2 )
                 .attr( "x", 20)
                 .text( "Population" )
                 .style( {"font-size": fontSize, "font-weight":"bold" });
@@ -565,11 +569,8 @@ d3.csv( "Data.csv", function( error, data ) {
         $( "#share" ).click( function() {
             $( "#embed" ).toggle();
             var url = window.location.href;
-           
-            var string = '<iframe src=' + url + ' height=' + h + ' width=' + width + ' marginheight=0 marginwidth=0 frameborder=0></iframe>';
-            
-//            var string='<ifram src='+url+ 'height=1260 width='+w+ 'marginheight=0 marginwidth=0 frameborder=0></iframe>';
-//            width=&#039; + parentNodeWidth + &#039; height=&quot;1260&quot; marginheight=&quot;0&quot; marginwidth=&quot;0&quot; frameborder=&quot;0&quot;
+            var string = '<iframe src=' + url + ' height=750 width=100% marginheight=0 marginwidth=0 frameborder=0></iframe>';
+ 
             $( "#embed" ).val( string );
             $( "#embed" ).select();
         });
