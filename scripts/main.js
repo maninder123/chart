@@ -423,8 +423,7 @@ function plotTheChart( data ) {
 }
 
 function sortDataAndReplotTheChart( data, sortValue ) {
-    
-    if( sortValue !== undefined ) {
+       if( sortValue !== undefined ) {
     data.sort( function( a, b ) { return ( a[ sortValue ] - b[ sortValue ] ); } );
     countryCode = [];
     country = [];
@@ -435,7 +434,7 @@ function sortDataAndReplotTheChart( data, sortValue ) {
     
     xScale.domain( countryCode );
     xScaleForGroupedBarChart.domain( countryCode );
-    color.range( [ "#0058CC" ,"#006AF5", "#1F80FF" ] );
+    color.range( [ "rgb(0, 71, 163)" ,"rgb(0, 150, 245)", "rgb(160, 200, 255)" ] );
     }
     
     $(".mainSvg").remove();
