@@ -10,15 +10,10 @@
         <link rel="stylesheet" type="text/css" href="js/libs/bootstrap.min.css" />
         <link rel="stylesheet" type="text/css" href="css/main.css" />
         <script src="js/libs/bootstrap.min.js"></script>
-
     </head>
     <body>
-       
         <h2 style="text-align: center;"> Mobile social media: Global Comparisons (Q4 2014)</h2>
-        
-
         <select>
-
             <option value="Population">Sort By</option>
             <option value="Population">Population</option>
             <option value="GDP Per Capita ( Nominal )">GDP Per Capita ( Nominal )</option>
@@ -28,82 +23,68 @@
             <option value="Avg mobile Data Speed">Avg mobile Data Speed</option>
             <option value="Avg Time Spent on Social Media">Avg Time Spent on Social Media</option>
         </select> 
-
         <div class="clear"></div>
-
         <div id = "chart-container"></div>
-        
         <div id = "chart-footer">
-        <div id ="shareCointer">
-            <div id="embedChart">
-                <button type="button" id="share"><b>Embed</b></button>
-                <input type="text" id="embed">
-            </div>
-
-            <!--Twitter Integration-->
-
-            <div id = "twitter_integration">
-                <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://www.rossdawson/frameworks/mobile-social-media-comparisons">Tweet</a>
-                <script>!function (d, s, id) {
-                        var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
-                        if (!d.getElementById(id)) {
+            <div id ="shareCointer">
+                <div id="embedChart">
+                    <button type="button" id="share"><b>Embed</b></button>
+                    <input type="text" id="embed">
+                </div>
+                <!--Twitter Integration-->
+                <div id = "twitter_integration">
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://ahextechnologies.com/test-d3/index.html">Tweet</a>
+                    <script>!function (d, s, id) {
+                            var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
+                            if (!d.getElementById(id)) {
+                                js = d.createElement(s);
+                                js.id = id;
+                                js.src = p + '://platform.twitter.com/widgets.js';
+                                fjs.parentNode.insertBefore(js, fjs);
+                            }
+                        }(document, 'script', 'twitter-wjs');</script>
+                </div>
+                <!--Facebook Integration-->
+                <div id ="fb_integration">
+                    <div id="fb-root"></div>
+                    <script>
+                        window.fbAsyncInit = function () {
+                            FB.init({
+                                appId: '1603811166568046',
+                                xfbml: true,
+                                version: 'v2.3'
+                            });
+                        };
+                        (function (d, s, id) {
+                            var js, fjs = d.getElementsByTagName(s)[0];
+                            if (d.getElementById(id)) {
+                                return;
+                            }
                             js = d.createElement(s);
                             js.id = id;
-                            js.src = p + '://platform.twitter.com/widgets.js';
+                            js.src = "//connect.facebook.net/en_US/sdk.js";
                             fjs.parentNode.insertBefore(js, fjs);
-                        }
-                    }(document, 'script', 'twitter-wjs');</script>
+                        }(document, 'script', 'facebook-jssdk'));
+                    </script>
+
+                    <div class="fb-share-button" data-href="http://ahextechnologies.com/test-d3/index.html" data-layout="button_count"></div>
+
+                </div>
             </div>
+            <div class="m1"></div>
 
-            <!--Facebook Integration-->
-
-            <div id ="fb_integration">
-                <div id="fb-root"></div>
-                <script>
-                    window.fbAsyncInit = function () {
-                        FB.init({
-                            appId: '1603811166568046',
-                            xfbml: true,
-                            version: 'v2.3'
-                        });
-                    };
-
-                    (function (d, s, id) {
-                        var js, fjs = d.getElementsByTagName(s)[0];
-                        if (d.getElementById(id)) {
-                            return;
-                        }
-                        js = d.createElement(s);
-                        js.id = id;
-                        js.src = "//connect.facebook.net/en_US/sdk.js";
-                        fjs.parentNode.insertBefore(js, fjs);
-                    }(document, 'script', 'facebook-jssdk'));
-                </script>
-
-                <div class="fb-share-button" data-href="http://www.rossdawson/frameworks/mobile-social-media-comparisons" data-layout="button_count"></div>
-
-            </div>
-        </div>
-        <div class="m1"></div>
-            
             <p>
-                            Data Sources  (Q4 2014): <br>
-                            Wikipedia, Statista, Worldometer, </br>
-                            Trading Economics, We Are Social, NetRadar.
-                </p>
-               
-        <div class="clear"></div>
-        
-        
-        <a href="http://www.memestreme.com/" title="AHT - Group" id="memestreme-Logo"><img src="images/logos/memestreme-Logo.png" alt="memestreme-Logo"/></a>
-        <div class="m1"></div>
-        <a href="http://ahtgroup.com" title="AHT - Group" id="AHT-Logo"><img src="images/logos/AHT-Logo.png" alt="AHT-Logo"/></a>
-        <a href="http://www.rossdawson.com/" title="AHT - Group" id="ROSSDRWSON-Logo"><img src="images/logos/ROSSDRWSON-Logo.png" alt="ROSSDRWSON-Logo"/></a>
-        
-             
+                Data Sources  (Q4 2014): <br>
+                Wikipedia, Statista, Worldometer, </br>
+                Trading Economics, We Are Social, NetRadar.
+            </p>
+            <div class="clear"></div>
+            <a href="http://www.memestreme.com/" title="AHT - Group" id="memestreme-Logo"><img src="images/logos/memestreme-Logo.png" alt="memestreme-Logo"/></a>
+            <div class="m1"></div>
+            <a href="http://ahtgroup.com" title="AHT - Group" id="AHT-Logo"><img src="images/logos/AHT-Logo.png" alt="AHT-Logo"/></a>
+            <a href="http://www.rossdawson.com/" title="AHT - Group" id="ROSSDRWSON-Logo"><img src="images/logos/ROSSDRWSON-Logo.png" alt="ROSSDRWSON-Logo"/></a>
         </div>
-
         <script src="scripts/main.js"></script>
-      
+
     </body>
 </html>
